@@ -1,0 +1,40 @@
+{
+  "platform": {
+    "applicationIcon": "/openfin-icon.png",
+    "defaultWindowOptions": {
+      "cornerRounding": {
+        "height": 12,
+        "width": 12
+      },
+      "contextMenu": true,
+      "defaultHeight": 400,
+      "defaultWidth": 300,
+      "minHeight": 300,
+      "minWidth": 400,
+      "saveWindowState": false,
+      "waitForPageLoad": true,
+      "url": "/"
+    },
+    "uuid": "openfin-test-app"
+  },
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "19.89.58.32"
+  },
+  "snapshot": {
+    "windows": [{
+      "layout": {
+        "content": [{
+          "type": "stack",
+          "content": [{
+            "type": "component",
+            "componentName": "view",
+            "componentState": {
+              "name": "main-component"
+            }
+          }]
+        }]
+      }
+    }]
+  }
+}

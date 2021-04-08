@@ -1,0 +1,64 @@
+@import '../../styles/modules/colors';
+
+.header {
+  -webkit-app-region: drag;
+  border-bottom: 1px solid $color-dark-gray-1;
+  display: flex;
+  height: 3rem;
+  user-select: none;
+
+  .title {
+    color: $color-white;
+    font-size: 0.9rem;
+    line-height: 3rem;
+    margin-left: 1rem;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    margin-left: auto;
+
+    & > div {
+      align-items: center;
+      -webkit-app-region: no-drag;
+      color: $color-white;
+      display: flex;
+      height: 3rem;
+      justify-content: center;
+      width: 4rem;
+
+      &:hover {
+        background-color: $color-dark-gray-1;
+      }
+    }
+
+    .close {
+      &:hover {
+        background-color: $color-negative;
+      }
+
+      .container > * {
+        transform: scale(0.9);
+      }
+    }
+
+    .container {
+      color: $color-white;
+      height: 15px;
+      width: 15px;
+    }
+
+    .maximize {
+      .container > * {
+        transform: scale(0.8);
+      }
+    }
+
+    .restore {
+      .container > * {
+        transform: scale(0.8) rotate(90deg);
+      }
+    }
+  }
+}
