@@ -1,1 +1,1 @@
-# openfin-api-project-template
+# openfin-monorepo-project-template
