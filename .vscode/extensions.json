@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "HookyQR.beautify",
     "msjsdiag.debugger-for-chrome",
-    "stylelint.vscode-stylelint"
+    "jpoissonnier.vscode-styled-components",
+    "visualstudioexptteam.vscodeintellicode"
   ]
 }

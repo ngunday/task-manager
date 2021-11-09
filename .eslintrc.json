@@ -1,71 +1,60 @@
 {
-  "env": {
-    "browser": true,
-    "node": true
-  },
   "extends": [
-    "airbnb-typescript/base",
-    "plugin:prettier/recommended"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "project": [
+      "./tsconfig.json",
+      "./src/**/tsconfig.json",
+      "./test/**/tsconfig.json"
+    ],
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "ignorePatterns": [
+    "**/*.spec.tsx",
+    "**/*.stories.tsx"
+  ],
+  "rules": {
+    "dot-notation": "off",
+    "@typescript-eslint/dot-notation": "error",
+    "react/prop-types": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "overrides": {
+          "constructors": "off"
+        }
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn"
+  },
   "globals": {
     "fin": "readonly",
     "JSX": "readonly"
   },
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
-  "plugins": [
-    "simple-import-sort",
-    "unused-imports"
-  ],
-  "rules": {
-    "@typescript-eslint/comma-dangle": "off",
-    "@typescript-eslint/indent": "off",
-    "@typescript-eslint/lines-between-class-members": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/semi": "warn",
-    "class-methods-use-this": "off",
-    "consistent-return": "off",
-    "func-style": "warn",
-    "global-require": "off",
-    "import/extensions": "off",
-    "import/no-dynamic-require": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true
-      }
-    ],
-    "import/order": "off",
-    "import/prefer-default-export": "off",
-    "no-bitwise": "off",
-    "no-empty": "off",
-    "no-nested-ternary": "off",
-    "no-param-reassign": "off",
-    "no-undef": "error",
-    "no-underscore-dangle": "off",
-    "no-unreachable": "warn",
-    "no-unused-vars": "warn",
-    "prefer-destructuring": "off",
-    "prettier/prettier": "warn",
-    "simple-import-sort/imports": [
-      "warn",
-      {
-        "groups": [
-          [
-            "^\\u0000",
-            "^@?\\w",
-            "^[^.]",
-            "^\\."
-          ]
-        ]
-      }
-    ],
-    "simple-import-sort/exports": "warn",
-    "sort-imports": "off",
-    "spaced-comment": "off",
-    "unused-imports/no-unused-imports-ts": "warn"
+  "env": {
+    "browser": true,
+    "node": true
   }
 }
