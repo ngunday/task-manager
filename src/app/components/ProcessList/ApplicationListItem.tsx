@@ -1,10 +1,9 @@
 import React from 'react';
-import { MoonIcon, CubeIcon, InputIcon, ExitIcon, DashboardIcon, BoxModelIcon, IdCardIcon } from '@modulz/radix-icons';
+import { MoonIcon, CubeIcon, InputIcon, ExitIcon, DashboardIcon } from '@modulz/radix-icons';
 import { Action, Application } from '../../model/Shapes';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
-import { ProcessListItem } from './ProcessListItem';
 
 interface Props {
   application: Application
@@ -13,7 +12,6 @@ interface Props {
 export const ApplicationListItem: React.FC<Props> = (props: Props) => {
   const {application} = props;
   const [showWindows, setShowWindows] = React.useState(false);
-  const [showProcesses, setShowProcesses] = React.useState(false);
   const [actions, setActions] = React.useState<Action[]>([]);
 
   React.useEffect(() => {
@@ -41,21 +39,18 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
     <>
       <ListItem
         name={application.displayName}
-        icon={application.icon}
+        icon={application.icon || ''}
         cpuUsage={application.cpuUsage}
         memUsage={application.memUsage}
         pid={application.pid}
         warning={!application.isRunning ? {icon: <MoonIcon/>, text: 'not running'} : undefined}
         runtime={application.runtime}
-        indicator={application.isPlatform ? {text: 'platform', icon: <CubeIcon/>} : undefined}
+        typePill={application.isPlatform ? {text: 'platform', icon: <CubeIcon/>} : {text: 'application', icon: <DashboardIcon/>}}
         details={[['UUID', application.uuid], ['Manifest', application.manifestUrl], ['URL', application.url]]}
         expanded={showWindows}
         onExpand={application.windows.length > 0 ? () => setShowWindows(!showWindows) : undefined}
         actions={actions}
         />
-        {showProcesses && application.processes.map((process) =>(
-          <ProcessListItem process={process} key={`process-${process.pid}`}/>
-        ))}
         {showWindows && application.windows.map((window) =>(
           <WindowListItem window={window} key={`window-${window.uuid}-${window.name}`}/>
         ))}

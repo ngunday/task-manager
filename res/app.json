@@ -4,6 +4,12 @@
     "name": "OpenFin Process Manager",
     "applicationIcon": "/openfin-icon.png"
   },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "OpenFin Process Manager",
+    "icon": "https://cdn.openfin.co/workspace/3.0.0/favicon.ico",
+    "name": "OpenFin Process Manager"
+  },
   "runtime": {
     "version": "22.94.65.4"
   },
@@ -13,7 +19,6 @@
         "height": 4,
         "width": 4
       },
-      "description": "OpenFin Process Manager",
       "defaultWidth": 800,
       "defaultHeight": 600,
       "minWidth": 640,

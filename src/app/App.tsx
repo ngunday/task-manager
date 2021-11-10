@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <Container>
           <Header title={"Process Manager"}/>
           <Body>
-            <TabGroup tabs={tabs} onChange={handleNavigate}></TabGroup>
+            {/* <TabGroup tabs={tabs} onChange={handleNavigate}></TabGroup> */}
             <PageContainer>
               <Routes>
                 <Route path="/" element={<Applications/>} />

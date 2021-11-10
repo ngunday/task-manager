@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputIcon, EyeClosedIcon, EyeOpenIcon, ResetIcon, ExitIcon, BoxModelIcon } from '@modulz/radix-icons';
+import { InputIcon, EyeNoneIcon, EyeOpenIcon, ResetIcon, ExitIcon, BoxModelIcon } from '@modulz/radix-icons';
 import { Action, Window } from '../../model/Shapes';
 import { ListItem } from './ListItem';
 import { ViewListItem } from './ViewListItem';
@@ -22,7 +22,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
         tooltip: 'Launch Developer Tools'
       },
       {
-        icon: window.isShowing ? <EyeClosedIcon/> : <EyeOpenIcon/>,
+        icon: window.isShowing ? <EyeNoneIcon/> : <EyeOpenIcon/>,
         tooltip: window.isShowing ? 'Hide Window' : 'Show Window',
         active: window.isShowing,
         action: async () => {
@@ -66,7 +66,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
     <>
       <ListItem 
         name={window.name}
-        icon={{text: 'window', icon: <BoxModelIcon />}}
+        typePill={{text: 'window', icon: <BoxModelIcon />}}
         actions={actions}
         expanded={expanded}
         pid={window.pid}

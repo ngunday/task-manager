@@ -13,7 +13,7 @@ export const ProcessListItem: React.FC<Props> = (props: Props) => {
   return (
     <ListItem 
       name={`PID: ${process.pid}`}
-      icon={{text: 'Process', icon: <DashboardIcon/>}}
+      typePill={{text: 'Process', icon: <DashboardIcon/>}}
       actions={[]}
       cpuUsage={process.cpuUsage}
       memUsage={process.memUsage}

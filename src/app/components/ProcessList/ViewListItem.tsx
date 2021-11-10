@@ -34,7 +34,7 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
   return (
     <ListItem 
       name={view.name}
-      icon={{text: 'View', icon: <GroupIcon/>}}
+      typePill={{text: 'View', icon: <GroupIcon/>}}
       actions={actions}
       pid={view.pid}
       details={[]}

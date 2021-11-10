@@ -6,11 +6,10 @@ import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/Shapes';
 import { Pill } from '../Pill/Pill';
 import { ActionBar } from '../ActionBar/ActionBar';
-import { DefinitionList } from '@openfin/ui-library';
 
 interface Props {
   name: string;
-  icon?: string | PillData;
+  icon?: string;
   cpuUsage?: number;
   memUsage?: number;
   pid?: number;
@@ -18,7 +17,7 @@ interface Props {
   expanded?: boolean;
   indentation?: number;
   onExpand?: () => void;
-  indicator?: PillData;
+  typePill?: PillData;
   warning?: PillData;
   actions: Action[];
   details: [string, string][];
@@ -27,7 +26,7 @@ interface Props {
 export const ListItem: React.FC<Props> = (props: Props) => {
   const {
     name,
-    icon = '',
+    icon,
     cpuUsage,
     memUsage,
     runtime,
@@ -35,81 +34,69 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     indentation = 0,
     expanded = false,
     onExpand,
-    details,
-    indicator,
+    typePill,
     warning,
     actions} = props;
-  const [focused, setFocused] = React.useState(false);
-  const [showDetails, setShowDetails] = React.useState(false);
-
-  React.useEffect(() => {
-    if (focused && details.length > 0) {
-      const id = setTimeout(() => setShowDetails(true), 1000);
-      return () => clearTimeout(id)
-    } else {
-      setShowDetails(false);
-    }
-  }, [focused]);
 
   return (
-    <Container onMouseEnter={()=>{setFocused(true)}} onMouseLeave={() => {setFocused(false)}}>
+    <Container>
       <Info>
         {indentation > 0 && Array.from(Array(indentation).keys()).map((i) => <Indentation key={`${name}-ind-${i}`}/>)}
         <Chevron onClick={onExpand}>
           {onExpand ? (expanded ? <ChevronDownIcon /> : <ChevronRightIcon />) : <></>}
         </Chevron>
-        {typeof icon === 'string' ?
-          <AppLogo src={icon || ''} size="xlarge" alt={name} /> : 
-          <Pill {...icon} fixed/>
-        }
+        {icon !== undefined && <AppLogo src={icon || ''} size="xlarge" alt={name} />}
         <Name>{name}</Name>
-        {indicator && <>
-          <Pill {...indicator} fixed/>
+        {typePill && <>
+          <TypePill {...typePill}/>
         </>}
         {warning && <>
-          <Pill {...warning} warning/>
+          <WarningPill {...warning}/>
         </>}
         <RightBar>
-          {focused && <ActionBar actions={actions}/>}
-          <Cell> {runtime} </Cell>
-          <CompactCell> {(cpuUsage||0.0).toFixed(1)}% </CompactCell>
-          <Cell> {formatMemory(memUsage||0.0, 1)} </Cell>
+          <Actions actions={actions}/>
+          {runtime !== undefined && <Cell> {runtime} </Cell>}
+          {cpuUsage !== undefined && <CompactCell> {(cpuUsage||0.0).toFixed(1)}% </CompactCell>}
+          {memUsage !== undefined && <Cell> {formatMemory(memUsage||0.0, 1)} </Cell>}
           <Cell> {pid} </Cell>
         </RightBar>
       </Info>
-      {/* {showDetails && <Details>
-        <DetailsBanner> <DetailsIcon/> Details </DetailsBanner>
-        <DefinitionList definitions={new Map(details)}/>
-      </Details>} */}
     </Container>
   );
 }
-
+const Actions = styled(ActionBar)`
+  transition: opacity ${({theme}) => theme.transition.base};
+  width: 0;
+  opacity: 0;
+`;
+const TypePill = styled(Pill)`
+  /* width: ${({theme}) => theme.px.base};
+  min-width: ${({theme}) => theme.px.base}; */
+  width: 0;
+  min-width: 0;
+  transition: all ${({theme}) => theme.transition.base};
+  font-size: ${({theme}) => theme.fontSize.small};
+`
+const WarningPill = styled(Pill)`
+  padding: ${({theme}) => `${theme.px.xsmall} ${theme.px.small}`};
+  background-color: ${({theme}) => theme.palette.statusCritical};
+`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   transition: background-color ${({theme}) => theme.transition.base};
   &:hover {
     background-color: ${({theme}) => theme.palette.background2};
-  }
+  };
+  &:hover ${TypePill} {
+    width: 85px;
+    min-width: 85px;
+  };
+  &:hover ${Actions} {
+    width: auto;
+    opacity: 1;
+  };
 `
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: ${({ theme }) => theme.fontSize.small};
-  line-height: ${({ theme }) => theme.px.base};
-  padding: ${({ theme }) => `0 ${theme.px.xxlarge}`};
-`
-const DetailsBanner = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: ${({ theme }) => ` ${theme.px.xsmall} ${theme.px.base}`};
-`
-const DetailsIcon = styled(FileTextIcon)`
-  width: ${({ theme }) => theme.px.base};
-  height: ${({ theme }) => theme.px.base};
-  margin-right: ${({ theme }) => theme.px.xsmall};
-`;
 const Info = styled.div`
   display: flex;
   flex-direction: row;
