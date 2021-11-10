@@ -1,1 +1,1 @@
-# openfin-monorepo-project-template
+OpenFin Task Manager
