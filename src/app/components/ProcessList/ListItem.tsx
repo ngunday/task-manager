@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AppLogo } from '../AppLogo/AppLogo';
-import { ChevronDownIcon, ChevronRightIcon, FileTextIcon } from '@modulz/radix-icons';
+import { ChevronDownIcon, ChevronRightIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/Shapes';
 import { Pill } from '../Pill/Pill';
+import { PulseGraph } from '../PulseGraph/PulseGraph';
 import { ActionBar } from '../ActionBar/ActionBar';
+import { DefinitionList } from '@openfin/ui-library';
 
 interface Props {
   name: string;
-  icon?: string;
+  pulseId?: string;
+  icon?: JSX.Element;
   cpuUsage?: number;
   memUsage?: number;
   pid?: number;
@@ -25,6 +27,7 @@ interface Props {
 
 export const ListItem: React.FC<Props> = (props: Props) => {
   const {
+    pulseId,
     name,
     icon,
     cpuUsage,
@@ -36,78 +39,111 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     onExpand,
     typePill,
     warning,
-    actions} = props;
+    details,
+    actions,
+  } = props;
+
+  const [showDetails, setShowDetails] = React.useState(false);
 
   return (
-    <Container>
-      <Info>
-        {indentation > 0 && Array.from(Array(indentation).keys()).map((i) => <Indentation key={`${name}-ind-${i}`}/>)}
-        <Chevron onClick={onExpand}>
-          {onExpand ? (expanded ? <ChevronDownIcon /> : <ChevronRightIcon />) : <></>}
-        </Chevron>
-        {icon !== undefined && <AppLogo src={icon || ''} size="xlarge" alt={name} />}
+    <Container showingDetails={showDetails}>
+      <Info indentation={indentation}>
+        <Chevron onClick={onExpand}>{onExpand ? expanded ? <ChevronDownIcon /> : <ChevronRightIcon /> : <></>}</Chevron>
+        {icon}
         <Name>{name}</Name>
-        {typePill && <>
-          <TypePill {...typePill}/>
-        </>}
-        {warning && <>
-          <WarningPill {...warning}/>
-        </>}
+        {typePill && <TypePill {...typePill} />}
+        {warning && <WarningPill {...warning} />}
         <RightBar>
-          <Actions actions={actions}/>
+          <Actions
+            actions={[
+              {
+                active: showDetails,
+                icon: <MagnifyingGlassIcon />,
+                action: () => setShowDetails(!showDetails),
+                tooltip: showDetails ? 'Hide Details' : 'Show Details',
+              },
+              ...actions,
+            ]}
+          />
           {runtime !== undefined && <Cell> {runtime} </Cell>}
-          {cpuUsage !== undefined && <CompactCell> {(cpuUsage||0.0).toFixed(1)}% </CompactCell>}
-          {memUsage !== undefined && <Cell> {formatMemory(memUsage||0.0, 1)} </Cell>}
-          <Cell> {pid} </Cell>
+          {cpuUsage !== undefined && <CompactCell> {(cpuUsage || 0.0).toFixed(1)}% </CompactCell>}
+          {memUsage !== undefined && <Cell> {formatMemory(memUsage || 0.0, 1)} </Cell>}
+          <CompactCell> {pid} </CompactCell>
         </RightBar>
       </Info>
+      {showDetails && (
+        <DetailsContainer>
+          <DetailsListContainer>
+            <Details definitions={new Map<string, string>(details)} indentation={indentation} />
+          </DetailsListContainer>
+          {pulseId && (
+            <GraphContainer>
+              <PulseGraph uuid={pulseId} />
+            </GraphContainer>
+          )}
+        </DetailsContainer>
+      )}
     </Container>
   );
-}
+};
 const Actions = styled(ActionBar)`
-  transition: opacity ${({theme}) => theme.transition.base};
+  transition: opacity ${({ theme }) => theme.transition.base};
   width: 0;
   opacity: 0;
 `;
 const TypePill = styled(Pill)`
-  /* width: ${({theme}) => theme.px.base};
-  min-width: ${({theme}) => theme.px.base}; */
-  width: 0;
-  min-width: 0;
-  transition: all ${({theme}) => theme.transition.base};
-  font-size: ${({theme}) => theme.fontSize.small};
-`
+  width: ${({ theme }) => theme.px.base};
+  min-width: ${({ theme }) => theme.px.base};
+  transition: all ${({ theme }) => theme.transition.base};
+  font-size: ${({ theme }) => theme.fontSize.small};
+`;
 const WarningPill = styled(Pill)`
-  padding: ${({theme}) => `${theme.px.xsmall} ${theme.px.small}`};
-  background-color: ${({theme}) => theme.palette.statusCritical};
-`
-const Container = styled.div`
+  padding: ${({ theme }) => `${theme.px.xsmall} ${theme.px.small}`};
+  background-color: ${({ theme }) => theme.palette.statusCritical};
+`;
+const Container = styled.div<{ showingDetails: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
-  transition: background-color ${({theme}) => theme.transition.base};
+  transition: background-color ${({ theme }) => theme.transition.base};
+  background-color: ${({ theme, showingDetails }) => (showingDetails ? theme.palette.background2 : 'transparent')};
+  border-top: ${({ theme, showingDetails }) => (showingDetails ? `1px solid ${theme.palette.background5}` : 'none')};
+  border-bottom: ${({ theme, showingDetails }) => (showingDetails ? `1px solid ${theme.palette.background5}` : 'none')};
   &:hover {
-    background-color: ${({theme}) => theme.palette.background2};
-  };
+    background-color: ${({ theme }) => theme.palette.background3};
+  }
   &:hover ${TypePill} {
     width: 85px;
     min-width: 85px;
-  };
+  }
   &:hover ${Actions} {
     width: auto;
     opacity: 1;
-  };
-`
-const Info = styled.div`
+  }
+`;
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const GraphContainer = styled.div`
+  margin: ${({ theme }) => theme.px.large};
+  display: flex;
+  justify-content: flex-end;
+`;
+const DetailsListContainer = styled.div`
+  flex: 1;
+`;
+const Details = styled(DefinitionList)<{ indentation: number }>`
+  margin-left: ${({ theme, indentation }) => `${theme.unit.xxlarge * indentation}px`};
+  padding-left: ${({ theme }) => theme.px.xxxlarge};
+`;
+const Info = styled.div<{ indentation: number }>`
   display: flex;
   flex-direction: row;
   padding: ${({ theme }) => `${theme.px.base} 0`};
+  margin-left: ${({ theme, indentation }) => `${theme.unit.xxlarge * indentation}px`};
   align-items: center;
   cursor: pointer;
-`;
-const Indentation = styled.div`
-  width: ${({ theme }) => theme.px.large};
-  height: ${({ theme }) => theme.px.large};
-  min-width: ${({ theme }) => theme.px.large};
 `;
 const Chevron = styled.div`
   display: flex;
@@ -135,7 +171,7 @@ const Cell = styled.div`
   align-items: center;
   justify-content: flex-end;
   text-align: right;
-`
+`;
 const CompactCell = styled(Cell)`
   width: 60px;
-`
+`;

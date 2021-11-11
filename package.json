@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "concurrently --kill-others yarn build:clean && yarn serve:dev",
     "lint": "yarn run lint:typescript && yarn run lint:styles",
-    "lint:typescript": "eslint \"./src/**/*.{ts,tsx}\"",
+    "lint:typescript": "eslint \"./src/**/*.{ts,tsx}\" --fix",
     "lint:styles": "stylelint \"./src/**/*.{ts,tsx}\"",
     "build:clean": "rimraf dist",
     "build:prod": "yarn build:clean && yarn lint && webpack build --config webpack.config.js --mode production",

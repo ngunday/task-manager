@@ -1,34 +1,40 @@
-import { ApplicationInfo } from "openfin/_v2/api/system/application";
-import { Application as OFLegacyApplication } from "openfin/_v2/main";
-import { Identity } from "openfin/_v2/identity";
+import { ApplicationInfo } from 'openfin/_v2/api/system/application';
+import { Application as OFLegacyApplication } from 'openfin/_v2/main';
+import { Identity } from 'openfin/_v2/identity';
+import { ViewCreationOptions } from 'openfin/_v2/api/view/view';
+import { Bounds } from 'openfin/_v2/shapes/shapes';
 
 export interface OFEntityProcessDetails {
   entityType: string;
   uuid: string;
   name: string;
   cpuUsage: number;
-  workingSetSize:	number;
+  workingSetSize: number;
   pid: number;
   parent?: Identity;
 }
 
 export interface OFAppProcessInfo {
-  uuid:	string;
+  uuid: string;
   entities: OFEntityProcessDetails[];
 }
 
 export type OFApplicationInfo = ApplicationInfo & {
   isPlatform: boolean;
-}
+};
 
 export type OFApplication = OFLegacyApplication & {
   getProcessInfo: () => OFAppProcessInfo;
-}
+};
 
 export interface OFManifest {
-  shortcut?: {name?: string; icon: string};
-  startup_app?: {uuid: string; name?: string; icon?: string; url: string};
-  platform?: {uuid: string; applicationIcon: string};
+  shortcut?: { name?: string; icon: string };
+  startup_app?: { uuid: string; name?: string; icon?: string; url: string };
+  platform?: { uuid: string; applicationIcon: string };
+}
+
+export interface OFViewCreationOptions extends ViewCreationOptions {
+  title?: string;
 }
 
 export interface Entity {
@@ -36,9 +42,11 @@ export interface Entity {
   url: string;
   uuid: string;
   name: string;
+  displayName: string;
 }
 
 export interface Window extends Entity {
+  bounds: Bounds;
   isShowing: boolean;
   views: Entity[];
 }
@@ -62,6 +70,8 @@ export interface Application extends Process {
   windows: Window[];
 }
 
+export type Pulse = Record<string, number>;
+
 export interface Pill {
   text: string;
   icon: JSX.Element;
@@ -69,7 +79,7 @@ export interface Pill {
 
 export enum Page {
   Processes,
-  Workspace
+  Workspace,
 }
 
 export enum LoadState {
@@ -79,9 +89,8 @@ export enum LoadState {
 }
 
 export interface Action {
-  icon: JSX.Element,
-  tooltip: string,
-  action: () => void,
-  active?: boolean
+  icon: JSX.Element;
+  tooltip: string;
+  action: () => void;
+  active?: boolean;
 }
-

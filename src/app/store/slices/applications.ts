@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Application } from '../../model/Shapes';
 
 export interface ApplicationsRootState {
-    applications: { value: Application[] };
+  applications: { value: Application[] };
 }
 
 export const applicationsSlice = createSlice({
-    name: 'applications',
-    initialState: {
-        value: []
+  name: 'applications',
+  initialState: {
+    value: [],
+  },
+  reducers: {
+    setApplications: (state, action) => {
+      state.value = action.payload || [];
     },
-    reducers: {
-        setApplications: (state, action) => {
-            state.value = action.payload || [];
-        }
-    }
+  },
 });
 
 export const { setApplications } = applicationsSlice.actions;

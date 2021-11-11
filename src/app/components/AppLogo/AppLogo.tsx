@@ -13,12 +13,7 @@ interface Props {
 }
 
 export const AppLogo: React.FC<Props> = (props: Props) => {
-  const {
-    src,
-    alt,
-    tooltip,
-    size
-  } = props;
+  const { src, alt, tooltip, size } = props;
   const imageState = useLoaded(src);
   const initials = alt?.substr(0, 1);
   const hasImg = !!src;
@@ -27,12 +22,7 @@ export const AppLogo: React.FC<Props> = (props: Props) => {
   const backgroundColor = !hasImgNotFailing ? generateHslColor(alt) : 'transparent';
 
   return (
-    <LogoIcon
-      src={src}
-      size={size}
-      backgroundColor={backgroundColor}
-      title={title}
-    >
+    <LogoIcon src={src} size={size} backgroundColor={backgroundColor} title={title}>
       {!hasImgNotFailing && initials}
     </LogoIcon>
   );
@@ -55,4 +45,3 @@ const LogoIcon = styled(Icon)<Omit<Props, 'alt'> & { backgroundColor: string }>`
   place-content: center;
   place-items: center;
 `;
-

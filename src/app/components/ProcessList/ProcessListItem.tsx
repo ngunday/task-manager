@@ -4,20 +4,20 @@ import { Process } from '../../model/Shapes';
 import { ListItem } from './ListItem';
 
 interface Props {
-  process: Process
+  process: Process;
 }
 
 export const ProcessListItem: React.FC<Props> = (props: Props) => {
-  const {process} = props;
+  const { process } = props;
 
   return (
-    <ListItem 
+    <ListItem
       name={`PID: ${process.pid}`}
-      typePill={{text: 'Process', icon: <DashboardIcon/>}}
+      typePill={{ text: 'Process', icon: <DashboardIcon /> }}
       actions={[]}
       cpuUsage={process.cpuUsage}
       memUsage={process.memUsage}
       details={[]}
-      />
+    />
   );
-}
+};

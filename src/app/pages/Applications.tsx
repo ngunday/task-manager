@@ -8,18 +8,19 @@ export const Applications: React.FC = () => {
 
   return (
     <Container>
-      <List applications={processPoll}/>
+      <List applications={processPoll} />
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: ${({theme}) => theme.palette.background1};
-  border-radius: ${({theme}) => theme.radius.base};
+  background-color: ${({ theme }) => theme.palette.background1};
+  border-radius: ${({ theme }) => theme.radius.base};
   overflow-y: auto;
-  border: 1px solid ${({theme}) => theme.palette.background5};
-  box-shadow: ${({theme})=> `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
+  overflow-x: hidden;
+  border: 1px solid ${({ theme }) => theme.palette.background5};
+  box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
 `;

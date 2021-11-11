@@ -1,9 +1,9 @@
-import { Identity } from "openfin/_v2/identity";
+import { Identity } from 'openfin/_v2/identity';
 
 export const launchDevTools = (uuid: string, name?: string) => {
-  return async () => {
+  return async (): Promise<void> => {
     try {
-      const id: Identity = {uuid: uuid || ''};
+      const id: Identity = { uuid: uuid || '' };
       if (name) {
         id.name = name;
       }
@@ -11,5 +11,5 @@ export const launchDevTools = (uuid: string, name?: string) => {
     } catch (e) {
       // fail quietly.
     }
-  }
-}
+  };
+};

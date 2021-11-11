@@ -18,19 +18,21 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = (props: Props) => {
-  const {title} = props;
+  const { title } = props;
 
-  return (<Container alignItems="center" flexGrow={0}>
-    <Heading>
-      <LogoIcon icon="OpenFinIcon" /> {title}
-    </Heading>
-    <Controls justifyContent="space-between" gap="base">
-      <MinimizeControl icon="MinusIcon" size="small" onClick={() => win?.minimize()} />
-      <Control icon="SizeIcon" size="small" onClick={maximize} />
-      <Control icon="Cross2Icon" size="small" onClick={() => win?.close()} />
-    </Controls>
-  </Container>);
-}
+  return (
+    <Container alignItems="center" flexGrow={0}>
+      <Heading>
+        <LogoIcon icon="OpenFinIcon" /> {title}
+      </Heading>
+      <Controls justifyContent="space-between" gap="base">
+        <MinimizeControl icon="MinusIcon" size="small" onClick={() => win?.minimize()} />
+        <Control icon="SizeIcon" size="small" onClick={maximize} />
+        <Control icon="Cross2Icon" size="small" onClick={() => win?.close()} />
+      </Controls>
+    </Container>
+  );
+};
 
 const Container = styled(Box)`
   flex: 0 0 auto;

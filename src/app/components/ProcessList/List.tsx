@@ -8,14 +8,14 @@ interface Props {
 }
 
 export const List: React.FC<Props> = (props: Props) => {
-  const {applications} = props;
+  const { applications } = props;
 
   return (
     <>
       <ListHeader />
       {applications.map((application) => (
-        <ApplicationListItem key={`p-${application.uuid}`} application={application}/>)
-      )}
+        <ApplicationListItem key={`p-${application.uuid}`} application={application} />
+      ))}
     </>
   );
-}
+};

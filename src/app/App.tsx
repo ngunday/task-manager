@@ -1,38 +1,35 @@
 import * as React from 'react';
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import {Provider} from 'react-redux';
-import store from './store/store'
+import { Provider } from 'react-redux';
+import store from './store/store';
 import { ThemeProvider, Mixins, Typography } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
 import { TabGroup, TabInfo } from './components/Tab/TabGroup';
 import { Workspace } from './pages/Workspace';
 import { Applications } from './pages/Applications';
 
-const tabs = [
-  {title: "applications"},
-  {title: "workspace"}
-]
+const tabs = [{ title: 'applications' }, { title: 'workspace' }];
 
 const App: React.FC = () => {
   const navigate = useNavigate();
   const handleNavigate = (tab: TabInfo) => {
     navigate(tab.title);
-  }
+  };
 
   return (
     <Provider store={store}>
       <ThemeProvider scheme="dark">
         <GlobalStyle />
         <Container>
-          <Header title={"Process Manager"}/>
+          <Header title={'Process Manager'} />
           <Body>
             {/* <TabGroup tabs={tabs} onChange={handleNavigate}></TabGroup> */}
             <PageContainer>
               <Routes>
-                <Route path="/" element={<Applications/>} />
-                <Route path="/applications" element={<Applications/>} />
-                <Route path="/workspace" element={<Workspace/>} />
+                <Route path="/" element={<Applications />} />
+                <Route path="/applications" element={<Applications />} />
+                <Route path="/workspace" element={<Workspace />} />
               </Routes>
             </PageContainer>
           </Body>
@@ -42,10 +39,14 @@ const App: React.FC = () => {
   );
 };
 
-export const RouterApp: React.FC = () => (<Router><App/></Router>);
+export const RouterApp: React.FC = () => (
+  <Router>
+    <App />
+  </Router>
+);
 
 const Container = styled.div`
-  background: ${({theme}) => theme.palette.background2};
+  background: ${({ theme }) => theme.palette.background2};
   width: 100%;
   width: 100vw;
   height: 100vh;
@@ -79,7 +80,7 @@ const Body = styled.div`
   flex-direction: column;
   height: ${({ theme }) => `calc(100% - ${theme.px.xxxxlarge})`};
   padding: ${({ theme }) => `${theme.px.base}`};
-`
+`;
 
 const GlobalStyle = createGlobalStyle`
   body {

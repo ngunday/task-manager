@@ -7,4 +7,4 @@ export const generateHslColor = (str: string, saturation = 70, lightness = 50): 
 
   const hue = hash % 360;
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-}
+};

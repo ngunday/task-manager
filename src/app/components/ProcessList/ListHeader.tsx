@@ -6,26 +6,26 @@ export const ListHeader: React.FC = () => {
   return (
     <Container>
       <RightBar>
-        <Cell> 
-          <GearIcon/>
-          <CellText> Runtime </CellText> 
+        <Cell>
+          <GearIcon />
+          <CellText> Runtime </CellText>
         </Cell>
-        <CompactCell> 
-          <LapTimerIcon/> 
-          <CellText> CPU </CellText>  
+        <CompactCell>
+          <LapTimerIcon />
+          <CellText> CPU </CellText>
         </CompactCell>
-        <Cell> 
-          <StackIcon/>
-          <CellText> Memory </CellText> 
+        <Cell>
+          <StackIcon />
+          <CellText> Memory </CellText>
         </Cell>
-        <Cell> 
-          <IdCardIcon/>
-          <CellText> Process </CellText> 
-        </Cell>
+        <CompactCell>
+          <IdCardIcon />
+          <CellText> PID </CellText>
+        </CompactCell>
       </RightBar>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   display: flex;
@@ -35,6 +35,7 @@ const Container = styled.div`
   top: 0;
   position: sticky;
   backdrop-filter: blur(15px);
+  z-index: 100;
 `;
 const RightBar = styled.div`
   padding-right: ${({ theme }) => theme.px.small};
@@ -48,10 +49,10 @@ const Cell = styled.div`
   align-items: center;
   justify-content: flex-end;
   text-align: right;
-`
+`;
 const CompactCell = styled(Cell)`
   width: 60px;
-`
+`;
 const CellText = styled.span`
-  padding-left: ${({theme}) => theme.px.xsmall};
+  padding-left: ${({ theme }) => theme.px.xsmall};
 `;

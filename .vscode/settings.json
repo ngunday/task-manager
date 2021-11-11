@@ -1,24 +1,18 @@
 {
-  "[html]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "beautify.config": {
     "end_with_newline": true,
@@ -57,8 +51,9 @@
   "stylelint.validate": ["css", "html", "markdown", "sass", "scss"],
   "typescript.tsdk": "./node_modules/typescript/lib",
   "eslint.workingDirectories": [
-    "api",
-    "app"
+    {
+      "mode": "auto"
+    }
   ],
   "files.exclude": {
     "**/node_modules": true
