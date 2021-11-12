@@ -44,6 +44,13 @@ export const ListItem: React.FC<Props> = (props: Props) => {
   } = props;
 
   const [showDetails, setShowDetails] = React.useState(false);
+  const [detailsMap, setDetailsMap] = React.useState<Map<string, string> | undefined>();
+
+  React.useEffect(() => {
+    setDetailsMap(
+      new Map<string, string>(details.length > 0 ? details.filter((detail) => detail[0] && detail[1]) : undefined)
+    );
+  }, [details]);
 
   return (
     <Container showingDetails={showDetails}>
@@ -73,9 +80,11 @@ export const ListItem: React.FC<Props> = (props: Props) => {
       </Info>
       {showDetails && (
         <DetailsContainer>
-          <DetailsListContainer>
-            <Details definitions={new Map<string, string>(details)} indentation={indentation} />
-          </DetailsListContainer>
+          {detailsMap && (
+            <DetailsListContainer>
+              <Details definitions={detailsMap} indentation={indentation} />
+            </DetailsListContainer>
+          )}
           {pulseId && (
             <GraphContainer>
               <PulseGraph uuid={pulseId} />

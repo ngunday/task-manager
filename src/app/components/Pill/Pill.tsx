@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Pill as PillData } from '../../model/Shapes';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, PillData {
-  warning?: boolean;
-  fixed?: boolean;
-}
+type Props = React.HTMLAttributes<HTMLDivElement> & PillData;
 
 export const Pill: React.FC<Props> = (props: Props) => {
   const { icon, text } = props;
