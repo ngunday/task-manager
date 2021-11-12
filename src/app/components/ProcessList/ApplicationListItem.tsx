@@ -49,7 +49,7 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
       ['URL', application.url],
     ]);
 
-    setIcon(<AppLogo src={application.icon} size="xlarge" alt={window.name} />);
+    setIcon(<AppLogo src={application.icon} size="xlarge" alt={application.displayName} />);
   }, [application]);
 
   return (
