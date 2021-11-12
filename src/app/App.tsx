@@ -50,7 +50,6 @@ const Container = styled.div`
   width: 100%;
   width: 100vw;
   height: 100vh;
-
   &:after {
     position: absolute;
     content: '';
@@ -62,86 +61,39 @@ const Container = styled.div`
     box-shadow: 0 0 1px 1px ${({ theme }) => theme.palette.background4};
     border-radius: ${({ theme }) => theme.radius.base};
   }
-
   &,
   * {
     ${Mixins.scrollbar.base}
   }
 `;
-
 const PageContainer = styled.div`
   display: flex;
   flex: 1;
   overflow-y: auto;
 `;
-
 const Body = styled.div`
   display: flex;
   flex-direction: column;
   height: ${({ theme }) => `calc(100% - ${theme.px.xxxxlarge})`};
   padding: ${({ theme }) => `${theme.px.base}`};
 `;
-
 const GlobalStyle = createGlobalStyle`
   body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-
     font: ${Typography.base};
     color: ${({ theme }) => theme.palette.textDefault};
     background-color: ${({ theme }) => theme.palette.background2};
     caret-color: ${({ theme }) => theme.palette.textDefault};
-
     user-select: none;
   }
-
   * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
   }
-
-  ul,
-  li {
-    list-style: none;
-  }
-
   &, * {
     ${Mixins.scrollbar.base}
-  }
-
-  .no-select {
-    user-select: none;
-  }
-
-  .single-line {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-wrap: break-word;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes fadeOutRight {
-    0% {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-
-    100% {
-      opacity: 0;
-      transform: translate3d(200%, 0, 0);
-      perspective: 1000;
-    }
   }
 `;

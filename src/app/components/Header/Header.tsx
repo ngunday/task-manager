@@ -42,40 +42,33 @@ const Container = styled(Box)`
   user-select: none;
   -webkit-app-region: drag;
 `;
-
 const Heading = styled(H4)`
   display: flex;
   align-items: center;
   line-height: ${({ theme }) => theme.lineHeight.ui};
 `;
-
 const LogoIcon = styled(Icon)`
   margin: 0 ${({ theme }) => theme.px.base};
   width: ${({ theme }) => theme.px.large};
   height: ${({ theme }) => theme.px.large};
 `;
-
 const Controls = styled(Box)`
   margin-left: auto;
   margin-right: ${({ theme }) => theme.px.base};
 `;
-
 const Control = styled(Icon)`
   -webkit-app-region: no-drag;
   width: ${({ theme }) => theme.px.xlarge};
   height: ${({ theme }) => theme.px.xlarge};
   cursor: pointer;
   border-radius: ${({ theme }) => theme.radius.round};
-
   &:hover {
     background: ${({ theme }) => theme.palette.background2};
   }
-
   &:active {
     background: ${({ theme }) => theme.palette.background1};
   }
 `;
-
 const MinimizeControl = styled(Control)`
   align-items: flex-end;
 `;

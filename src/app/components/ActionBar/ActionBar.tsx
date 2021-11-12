@@ -9,10 +9,16 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const ActionBar: React.FC<Props> = (props: Props) => {
   const { actions } = props;
 
+  const handleClick = (callback: () => void) => (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    callback && callback();
+  };
+
   return (
     <Container {...props}>
       {actions.map((action, index) => (
-        <Action onClick={action.action} selected={!!action.active} key={`${name}-${index}`}>
+        <Action onClick={handleClick(action.action)} selected={!!action.active} key={`${name}-${index}`}>
           {action.icon}
           <Tooltip>{action.tooltip}</Tooltip>
         </Action>

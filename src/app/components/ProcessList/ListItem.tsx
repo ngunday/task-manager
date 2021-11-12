@@ -52,10 +52,18 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     );
   }, [details]);
 
+  const handleExpandClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    onExpand && onExpand();
+  };
+
   return (
-    <Container showingDetails={showDetails}>
+    <Container showingDetails={showDetails} onClick={() => setShowDetails(!showDetails)}>
       <Info indentation={indentation}>
-        <Chevron onClick={onExpand}>{onExpand ? expanded ? <ChevronDownIcon /> : <ChevronRightIcon /> : <></>}</Chevron>
+        <Chevron onClick={handleExpandClick}>
+          {onExpand ? expanded ? <ChevronDownIcon /> : <ChevronRightIcon /> : <></>}
+        </Chevron>
         {icon}
         <Name>{name}</Name>
         {typePill && <TypePill {...typePill} />}

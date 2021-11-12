@@ -22,7 +22,6 @@ const Icon = styled.div`
   padding-right: ${({ theme }) => theme.px.xsmall};
   width: ${({ theme }) => theme.px.large};
 `;
-
 const Container = styled.div`
   font-size: ${({ theme }) => theme.fontSize.small};
   border-radius: ${({ theme }) => theme.px.base};
