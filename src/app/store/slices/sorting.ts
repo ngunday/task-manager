@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SortField, SortMode, SortOrder } from '../../model/Shapes';
+import { SortField, SortMode, SortOrder } from '../../model/UI';
 
 export interface SortingRootState {
   sorting: { value: SortMode };

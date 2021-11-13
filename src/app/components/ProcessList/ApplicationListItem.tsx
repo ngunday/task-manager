@@ -1,10 +1,12 @@
 import React from 'react';
-import { MoonIcon, CubeIcon, InputIcon, ExitIcon, DashboardIcon, LayersIcon } from '@modulz/radix-icons';
-import { Action, Application } from '../../model/Shapes';
+import { MoonIcon, InputIcon, ExitIcon, DashboardIcon, LayersIcon } from '@modulz/radix-icons';
+import { Application } from '../../model/Shapes';
+import { Action } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
 import { AppLogo } from '../AppLogo/AppLogo';
+import { Pulse } from '../Graph/Pulse';
 
 interface Props {
   application: Application;
@@ -55,7 +57,7 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
     <>
       <ListItem
         name={application.displayName}
-        pulseId={application.uuid}
+        graph={<Pulse uuid={application.uuid} />}
         icon={icon}
         cpuUsage={application.cpuUsage}
         memUsage={application.memUsage}

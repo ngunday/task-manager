@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ArrowDownIcon, ArrowUpIcon } from '@modulz/radix-icons';
-import { SortOrder, SortField } from '../../model/Shapes';
+import { SortOrder, SortField } from '../../model/UI';
 import { useSelector } from 'react-redux';
 import { selectSortMode } from '../../store/slices/sorting';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Pill as PillData } from '../../model/Shapes';
+import { Pill as PillData } from '../../model/UI';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & PillData;
 

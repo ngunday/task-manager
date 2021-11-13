@@ -2,15 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChevronDownIcon, ChevronRightIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { formatMemory } from '../../utils/formatMemory';
-import { Action, Pill as PillData } from '../../model/Shapes';
+import { Action, Pill as PillData } from '../../model/UI';
 import { Pill } from '../Pill/Pill';
-import { PulseGraph } from '../PulseGraph/PulseGraph';
 import { IconButton } from '../Button/IconButton';
 import { DefinitionList } from '@openfin/ui-library';
 
 interface Props {
   name: string;
-  pulseId?: string;
   icon?: JSX.Element;
   cpuUsage?: number;
   memUsage?: number;
@@ -18,6 +16,7 @@ interface Props {
   runtime?: string;
   expanded?: boolean;
   indentation?: number;
+  graph?: JSX.Element;
   onExpand?: () => void;
   typePill?: PillData;
   warning?: PillData;
@@ -27,7 +26,6 @@ interface Props {
 
 export const ListItem: React.FC<Props> = (props: Props) => {
   const {
-    pulseId,
     name,
     icon,
     cpuUsage,
@@ -36,6 +34,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     pid,
     indentation = 0,
     expanded = false,
+    graph,
     onExpand,
     typePill,
     warning,
@@ -108,11 +107,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
               <Details definitions={detailsMap} indentation={indentation} />
             </DetailsListContainer>
           )}
-          {pulseId && (
-            <GraphContainer>
-              <PulseGraph uuid={pulseId} />
-            </GraphContainer>
-          )}
+          {graph && <GraphContainer>{graph}</GraphContainer>}
         </DetailsContainer>
       )}
     </Container>
@@ -172,6 +167,12 @@ const DetailsListContainer = styled.div`
 const Details = styled(DefinitionList)<{ indentation: number }>`
   margin-left: ${({ theme, indentation }) => `${theme.unit.xxlarge * indentation}px`};
   padding-left: ${({ theme }) => theme.px.xxxlarge};
+  & dd {
+    user-select: text;
+    ::selection {
+      background: ${({ theme }) => theme.palette.brandPrimary};
+    }
+  }
 `;
 const Info = styled.div<{ indentation: number }>`
   display: flex;

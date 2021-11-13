@@ -1,6 +1,7 @@
 import React from 'react';
 import { GroupIcon, ExitIcon, InputIcon } from '@modulz/radix-icons';
-import { Action, Entity } from '../../model/Shapes';
+import { Entity } from '../../model/Shapes';
+import { Action } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
 
@@ -12,6 +13,7 @@ interface Props {
 export const ViewListItem: React.FC<Props> = (props: Props) => {
   const { view, icon } = props;
   const [actions, setActions] = React.useState<Action[]>([]);
+  const [details, setDetails] = React.useState<[string, string][]>([]);
 
   React.useEffect(() => {
     setActions([
@@ -33,6 +35,15 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
         },
       },
     ]);
+
+    setDetails([
+      ['Name', view.name],
+      ['URL', view.url],
+      [
+        'Bounds (Relative)',
+        `${view.bounds.width}w ${view.bounds.height}h at (${view.bounds.left}, ${view.bounds.top})`,
+      ],
+    ]);
   }, [view]);
 
   return (
@@ -42,10 +53,7 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
       actions={actions}
       pid={view.pid}
       icon={icon}
-      details={[
-        ['Name', view.name],
-        ['URL', view.url],
-      ]}
+      details={details}
       indentation={2}
     />
   );

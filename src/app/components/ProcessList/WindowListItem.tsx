@@ -1,9 +1,11 @@
 import React from 'react';
 import { InputIcon, EyeNoneIcon, EyeOpenIcon, ResetIcon, ExitIcon, BoxModelIcon } from '@modulz/radix-icons';
-import { Action, Window } from '../../model/Shapes';
+import { Window } from '../../model/Shapes';
+import { Action } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { ViewListItem } from './ViewListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
+import { Layout } from '../Graph/Layout';
 
 interface Props {
   window: Window;
@@ -17,56 +19,62 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
   const [details, setDetails] = React.useState<[string, string][]>([]);
 
   React.useEffect(() => {
+    let conditional: Action[] = [];
+    if (window.uuid !== fin.me.uuid) {
+      conditional = [
+        {
+          icon: window.isShowing ? <EyeNoneIcon /> : <EyeOpenIcon />,
+          tooltip: window.isShowing ? 'Hide Window' : 'Show Window',
+          active: window.isShowing,
+          action: async () => {
+            const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
+            try {
+              if (window.isShowing) {
+                win.hide();
+              } else {
+                win.show();
+              }
+            } catch (e) {
+              /* do nothing */
+            }
+          },
+        },
+        {
+          icon: <ResetIcon />,
+          tooltip: 'Rescue Off-Screen Window',
+          action: async () => {
+            const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
+            try {
+              win.show();
+              win.moveTo(100, 100);
+              win.focus();
+              win.bringToFront();
+            } catch (e) {
+              /* do nothing */
+            }
+          },
+        },
+        {
+          icon: <ExitIcon />,
+          tooltip: 'Close Window',
+          action: async () => {
+            const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
+            try {
+              win.close();
+            } catch (e) {
+              /* do nothing */
+            }
+          },
+        },
+      ];
+    }
     setActions([
       {
         icon: <InputIcon />,
         action: launchDevTools(window.uuid, window.name),
         tooltip: 'Launch Developer Tools',
       },
-      {
-        icon: window.isShowing ? <EyeNoneIcon /> : <EyeOpenIcon />,
-        tooltip: window.isShowing ? 'Hide Window' : 'Show Window',
-        active: window.isShowing,
-        action: async () => {
-          const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
-          try {
-            if (window.isShowing) {
-              win.hide();
-            } else {
-              win.show();
-            }
-          } catch (e) {
-            /* do nothing */
-          }
-        },
-      },
-      {
-        icon: <ResetIcon />,
-        tooltip: 'Rescue Off-Screen Window',
-        action: async () => {
-          const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
-          try {
-            win.show();
-            win.moveTo(100, 100);
-            win.focus();
-            win.bringToFront();
-          } catch (e) {
-            /* do nothing */
-          }
-        },
-      },
-      {
-        icon: <ExitIcon />,
-        tooltip: 'Close Window',
-        action: async () => {
-          const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
-          try {
-            win.close();
-          } catch (e) {
-            /* do nothing */
-          }
-        },
-      },
+      ...conditional,
     ]);
 
     setDetails([
@@ -87,13 +95,8 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
         indentation={1}
         details={details}
         icon={icon}
-        onExpand={
-          window.views.length > 0
-            ? () => {
-                setExpanded(!expanded);
-              }
-            : undefined
-        }
+        graph={window.views.length > 0 ? <Layout window={window} /> : undefined}
+        onExpand={window.views.length > 0 ? () => setExpanded(!expanded) : undefined}
       />
       {expanded &&
         window.views.map((view) => <ViewListItem view={view} icon={icon} key={`view-${view.uuid}-${view.name}`} />)}

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { RouterApp } from './app/App';
+import { App } from './app/App';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-ReactDOM.render(React.createElement(RouterApp), document.getElementById('app'));
+ReactDOM.render(React.createElement(App), document.getElementById('app'));

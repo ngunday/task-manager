@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { LapTimerIcon, StackIcon, GearIcon, IdCardIcon } from '@modulz/radix-icons';
 import { setSortMode } from '../../store/slices/sorting';
-import { SortField } from '../../model/Shapes';
+import { SortField } from '../../model/UI';
 import { useDispatch } from 'react-redux';
 import { SortIcon } from '../SortIcon/SortIcon';
 

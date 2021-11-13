@@ -1,18 +1,15 @@
 import * as React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { ThemeProvider, Mixins, Typography } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
-import { TabGroup, TabInfo } from './components/Tab/TabGroup';
-import { Workspace } from './pages/Workspace';
 import { Applications } from './pages/Applications';
 import { CubeIcon } from '@modulz/radix-icons';
+import { ActionMenu } from './components/Menu/ActionMenu';
+import { Label } from './components/Label/Label';
 
-const tabs = [{ title: 'applications' }, { title: 'workspace' }];
-
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [version, setVersion] = React.useState('0.0.0.0');
 
   React.useEffect(() => {
@@ -21,29 +18,19 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const navigate = useNavigate();
-  const handleNavigate = (tab: TabInfo) => {
-    navigate(tab.title);
-  };
-
   return (
     <Provider store={store}>
       <ThemeProvider scheme="dark">
         <GlobalStyle />
         <Container>
-          <Header title={'Process Manager'} />
+          <Header title={'OpenFin Process Manager'} />
           <Body>
-            <VersionContainer>
-              <CubeIcon />
-              <Version> {`RVM Version: ${version}`} </Version>
-            </VersionContainer>
-            {/* <TabGroup tabs={tabs} onChange={handleNavigate}></TabGroup> */}
+            <TopBar>
+              <ActionMenu />
+              <VersionLabel icon={<CubeIcon />} text={`RVM Version: ${version}`} />
+            </TopBar>
             <PageContainer>
-              <Routes>
-                <Route path="/" element={<Applications />} />
-                <Route path="/applications" element={<Applications />} />
-                <Route path="/workspace" element={<Workspace />} />
-              </Routes>
+              <Applications />
             </PageContainer>
           </Body>
         </Container>
@@ -52,15 +39,8 @@ const App: React.FC = () => {
   );
 };
 
-export const RouterApp: React.FC = () => (
-  <Router>
-    <App />
-  </Router>
-);
-
 const Container = styled.div`
   background: ${({ theme }) => theme.palette.background2};
-  width: 100%;
   width: 100vw;
   height: 100vh;
   &:after {
@@ -79,14 +59,12 @@ const Container = styled.div`
     ${Mixins.scrollbar.base}
   }
 `;
-const VersionContainer = styled.div`
+const TopBar = styled.div`
   display: flex;
-  align-items: center;
-  margin: ${({ theme }) => `0 ${theme.px.large} ${theme.px.base} 0`};
-  margin-left: auto;
+  margin: ${({ theme }) => `0 ${theme.px.base} ${theme.px.small} ${theme.px.base}`};
 `;
-const Version = styled.span`
-  margin-left: ${({ theme }) => theme.px.small};
+const VersionLabel = styled(Label)`
+  margin-left: auto;
 `;
 const PageContainer = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoadState } from '../model/Shapes';
+import { LoadState } from '../model/UI';
 
 export const useLoaded = (src = '', srcSet?: string): LoadState => {
   const [loaded, setLoaded] = React.useState<LoadState>(LoadState.LOADING);

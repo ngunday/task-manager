@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon, IconSizeType, FontSize } from '@openfin/ui-library';
 import { generateHslColor } from '../../utils/generateHslColor';
 import { useLoaded } from '../../hooks/useLoaded';
-import { LoadState } from '../../model/Shapes';
+import { LoadState } from '../../model/UI';
 
 interface Props {
   src: string;

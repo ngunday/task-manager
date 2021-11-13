@@ -1,17 +1,9 @@
 import { ApplicationOption } from 'openfin/_v2/api/application/applicationOption';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  OFManifest,
-  OFApplication,
-  OFApplicationInfo,
-  Application,
-  Process,
-  OFViewCreationOptions,
-  Pulse,
-  SortField,
-  SortOrder,
-} from '../model/Shapes';
+import { Application, Process, Pulse } from '../model/Shapes';
+import { OFManifest, OFApplication, OFApplicationInfo, OFViewCreationOptions } from '../model/OpenFinShim';
+import { SortField, SortOrder } from '../model/UI';
 import { selectApplications, setApplications } from '../store/slices/applications';
 import { submitPulse } from '../store/slices/pulse';
 import { selectSortMode } from '../store/slices/sorting';
@@ -68,18 +60,19 @@ export const useProcessPoll = (): Application[] => {
                   const viewInfo = await v.getInfo();
                   const viewOptions: OFViewCreationOptions = await v.getOptions();
                   return {
-                    pid: view.pid,
                     uuid: view.uuid,
                     name: view.name,
+                    pid: view.pid,
+                    bounds: await v.getBounds(),
                     displayName: viewOptions.title || view.name,
                     url: viewInfo.url,
                   };
                 });
               return {
-                bounds: await win.getBounds(),
                 uuid: window.uuid,
                 name: window.name,
                 pid: window.pid,
+                bounds: await win.getBounds(),
                 displayName: windowInfo.title || window.name,
                 url: windowInfo.url,
                 isShowing,
