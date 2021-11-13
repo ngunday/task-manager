@@ -5,14 +5,19 @@ export interface ApplicationsRootState {
   applications: { value: Application[] };
 }
 
+export interface ApplicationsAction {
+  payload: Application[];
+  type: string;
+}
+
 export const applicationsSlice = createSlice({
   name: 'applications',
   initialState: {
     value: [],
   },
   reducers: {
-    setApplications: (state, action) => {
-      state.value = action.payload || [];
+    setApplications: (state: ApplicationsRootState['applications'], action: ApplicationsAction) => {
+      state.value = action.payload ? [...action.payload] : [];
     },
   },
 });

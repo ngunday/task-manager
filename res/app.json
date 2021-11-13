@@ -14,21 +14,23 @@
     "version": "22.94.65.4"
   },
   "snapshot": {
-    "windows": [{
-      "cornerRounding": {
-        "height": 4,
-        "width": 4
-      },
-      "defaultWidth": 800,
-      "defaultHeight": 600,
-      "minWidth": 640,
-      "minHeight": 480,
-      "contextMenu": true,
-      "saveWindowState": true,
-      "waitForPageLoad": true,
-      "url": "http://localhost:8888",
-      "frame": false,
-      "name": "OpenFin Process Manager"
-    }]
+    "windows": [
+      {
+        "cornerRounding": {
+          "height": 4,
+          "width": 4
+        },
+        "defaultWidth": 800,
+        "defaultHeight": 600,
+        "minWidth": 800,
+        "minHeight": 480,
+        "contextMenu": true,
+        "saveWindowState": true,
+        "waitForPageLoad": true,
+        "url": "http://localhost:8888",
+        "frame": false,
+        "name": "OpenFin Process Manager"
+      }
+    ]
   }
 }

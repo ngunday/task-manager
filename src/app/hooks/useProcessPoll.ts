@@ -9,12 +9,18 @@ import {
   Process,
   OFViewCreationOptions,
   Pulse,
+  SortField,
+  SortOrder,
 } from '../model/Shapes';
 import { selectApplications, setApplications } from '../store/slices/applications';
 import { submitPulse } from '../store/slices/pulse';
+import { selectSortMode } from '../store/slices/sorting';
 
 export const useProcessPoll = (): Application[] => {
+  const [unsortedApps, setUnsortedApps] = React.useState<Application[]>([]);
   const dispatch = useDispatch();
+  const sortMode = useSelector(selectSortMode);
+  const applications = useSelector(selectApplications);
 
   React.useEffect(() => {
     const pulse: Pulse = {};
@@ -122,14 +128,33 @@ export const useProcessPoll = (): Application[] => {
         };
       });
 
-      const applications = await Promise.all(processMap);
-      applications.sort((a, b) => a.displayName.localeCompare(b.displayName));
-
       dispatch(submitPulse(pulse));
-      dispatch(setApplications(applications));
+      setUnsortedApps(await Promise.all(processMap));
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  return useSelector(selectApplications);
+  React.useEffect(() => {
+    const asc = sortMode.order === SortOrder.ASCENDING;
+    const apps = [...unsortedApps];
+
+    apps.sort((a, b) => {
+      switch (sortMode.field) {
+        case SortField.CPU: {
+          return (a.cpuUsage - b.cpuUsage) * (asc ? 1 : -1);
+        }
+        case SortField.MEMORY: {
+          return (a.memUsage - b.memUsage) * (asc ? 1 : -1);
+        }
+        case SortField.NAME: {
+          // Name sorting is always A->Z
+          return a.displayName.localeCompare(b.displayName);
+        }
+      }
+    });
+
+    dispatch(setApplications(apps));
+  }, [unsortedApps, sortMode]);
+
+  return applications;
 };

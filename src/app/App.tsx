@@ -8,10 +8,19 @@ import { Header } from './components/Header/Header';
 import { TabGroup, TabInfo } from './components/Tab/TabGroup';
 import { Workspace } from './pages/Workspace';
 import { Applications } from './pages/Applications';
+import { CubeIcon } from '@modulz/radix-icons';
 
 const tabs = [{ title: 'applications' }, { title: 'workspace' }];
 
 const App: React.FC = () => {
+  const [version, setVersion] = React.useState('0.0.0.0');
+
+  React.useEffect(() => {
+    fin.System.getRvmInfo().then((info) => {
+      setVersion(info.version);
+    });
+  }, []);
+
   const navigate = useNavigate();
   const handleNavigate = (tab: TabInfo) => {
     navigate(tab.title);
@@ -24,6 +33,10 @@ const App: React.FC = () => {
         <Container>
           <Header title={'Process Manager'} />
           <Body>
+            <VersionContainer>
+              <CubeIcon />
+              <Version> {`RVM Version: ${version}`} </Version>
+            </VersionContainer>
             {/* <TabGroup tabs={tabs} onChange={handleNavigate}></TabGroup> */}
             <PageContainer>
               <Routes>
@@ -65,6 +78,15 @@ const Container = styled.div`
   * {
     ${Mixins.scrollbar.base}
   }
+`;
+const VersionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: ${({ theme }) => `0 ${theme.px.large} ${theme.px.base} 0`};
+  margin-left: auto;
+`;
+const Version = styled.span`
+  margin-left: ${({ theme }) => theme.px.small};
 `;
 const PageContainer = styled.div`
   display: flex;

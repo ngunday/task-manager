@@ -88,9 +88,25 @@ export enum LoadState {
   LOADED = 'loaded',
 }
 
+export enum SortOrder {
+  ASCENDING = 'asc',
+  DESCENDING = 'des',
+}
+
+export enum SortField {
+  NAME = 'name',
+  CPU = 'cpu',
+  MEMORY = 'memory',
+}
+
+export interface SortMode {
+  field: SortField;
+  order: SortOrder;
+}
+
 export interface Action {
   icon: JSX.Element;
-  tooltip: string;
   action: () => void;
+  tooltip?: string;
   active?: boolean;
 }

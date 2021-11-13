@@ -5,7 +5,7 @@ import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/Shapes';
 import { Pill } from '../Pill/Pill';
 import { PulseGraph } from '../PulseGraph/PulseGraph';
-import { ActionBar } from '../ActionBar/ActionBar';
+import { IconButton } from '../Button/IconButton';
 import { DefinitionList } from '@openfin/ui-library';
 
 interface Props {
@@ -45,6 +45,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
 
   const [showDetails, setShowDetails] = React.useState(false);
   const [detailsMap, setDetailsMap] = React.useState<Map<string, string> | undefined>();
+  const [actionList, setActionList] = React.useState<Action[]>([]);
 
   React.useEffect(() => {
     setDetailsMap(
@@ -52,34 +53,48 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     );
   }, [details]);
 
-  const handleExpandClick = (event: React.MouseEvent) => {
+  React.useEffect(() => {
+    setActionList([
+      {
+        active: showDetails,
+        icon: <MagnifyingGlassIcon />,
+        action: () => setShowDetails(!showDetails),
+        tooltip: showDetails ? 'Hide Details' : 'Show Details',
+      },
+      ...actions,
+    ]);
+  }, [actions, showDetails]);
+
+  const handleExpand = (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
     onExpand && onExpand();
   };
 
   return (
-    <Container showingDetails={showDetails} onClick={() => setShowDetails(!showDetails)}>
+    <Container showingDetails={showDetails} onClick={handleExpand}>
       <Info indentation={indentation}>
-        <Chevron onClick={handleExpandClick}>
-          {onExpand ? expanded ? <ChevronDownIcon /> : <ChevronRightIcon /> : <></>}
+        <Chevron>
+          {onExpand && (
+            <IconButton icon={expanded ? <ChevronDownIcon /> : <ChevronRightIcon />} action={onExpand} transparent />
+          )}
         </Chevron>
         {icon}
         <Name>{name}</Name>
         {typePill && <TypePill {...typePill} />}
         {warning && <WarningPill {...warning} />}
         <RightBar>
-          <Actions
-            actions={[
-              {
-                active: showDetails,
-                icon: <MagnifyingGlassIcon />,
-                action: () => setShowDetails(!showDetails),
-                tooltip: showDetails ? 'Hide Details' : 'Show Details',
-              },
-              ...actions,
-            ]}
-          />
+          <Actions>
+            {actionList.map((action, index) => (
+              <IconButton
+                icon={action.icon}
+                tooltip={action.tooltip}
+                active={action.active}
+                action={action.action}
+                key={`${name}-${action.active ? '' : 'in'}active-action-${index}`}
+              />
+            ))}
+          </Actions>
           {runtime !== undefined && <Cell> {runtime} </Cell>}
           {cpuUsage !== undefined && <CompactCell> {(cpuUsage || 0.0).toFixed(1)}% </CompactCell>}
           {memUsage !== undefined && <Cell> {formatMemory(memUsage || 0.0, 1)} </Cell>}
@@ -103,7 +118,10 @@ export const ListItem: React.FC<Props> = (props: Props) => {
     </Container>
   );
 };
-const Actions = styled(ActionBar)`
+const Actions = styled.div`
+  display: flex;
+  padding-left: ${({ theme }) => theme.px.xxxlarge};
+  overflow-x: hidden;
   transition: opacity ${({ theme }) => theme.transition.base};
   width: 0;
   opacity: 0;
@@ -126,6 +144,7 @@ const Container = styled.div<{ showingDetails: boolean }>`
   background-color: ${({ theme, showingDetails }) => (showingDetails ? theme.palette.background2 : 'transparent')};
   border-top: ${({ theme, showingDetails }) => (showingDetails ? `1px solid ${theme.palette.background5}` : 'none')};
   border-bottom: ${({ theme, showingDetails }) => (showingDetails ? `1px solid ${theme.palette.background5}` : 'none')};
+  padding: ${({ theme }) => `0 ${theme.px.base}`};
   &:hover {
     background-color: ${({ theme }) => theme.palette.background3};
   }
@@ -143,7 +162,7 @@ const DetailsContainer = styled.div`
   flex-direction: row;
 `;
 const GraphContainer = styled.div`
-  margin: ${({ theme }) => theme.px.large};
+  margin: ${({ theme }) => theme.px.small};
   display: flex;
   justify-content: flex-end;
 `;
@@ -163,9 +182,6 @@ const Info = styled.div<{ indentation: number }>`
   cursor: pointer;
 `;
 const Chevron = styled.div`
-  display: flex;
-  padding: ${({ theme }) => theme.px.xsmall};
-  width: ${({ theme }) => theme.px.xxlarge};
   height: ${({ theme }) => theme.px.xxlarge};
   min-width: ${({ theme }) => theme.px.xxlarge};
 `;
@@ -183,12 +199,12 @@ const RightBar = styled.div`
   flex-direction: row;
 `;
 const Cell = styled.div`
-  width: 80px;
+  width: 85px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   text-align: right;
 `;
 const CompactCell = styled(Cell)`
-  width: 60px;
+  width: 65px;
 `;

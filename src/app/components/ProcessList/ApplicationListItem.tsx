@@ -1,11 +1,10 @@
 import React from 'react';
-import { MoonIcon, CubeIcon, InputIcon, ExitIcon, DashboardIcon } from '@modulz/radix-icons';
+import { MoonIcon, CubeIcon, InputIcon, ExitIcon, DashboardIcon, LayersIcon } from '@modulz/radix-icons';
 import { Action, Application } from '../../model/Shapes';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
 import { AppLogo } from '../AppLogo/AppLogo';
-import application from 'openfin/_v2/api/application/application';
 
 interface Props {
   application: Application;
@@ -65,7 +64,7 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
         runtime={application.runtime}
         typePill={
           application.isPlatform
-            ? { text: 'platform', icon: <CubeIcon /> }
+            ? { text: 'platform', icon: <LayersIcon /> }
             : { text: 'application', icon: <DashboardIcon /> }
         }
         details={details}

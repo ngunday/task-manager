@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const win = fin.Window.getCurrentSync();
 const maximize = async () => {
   const windowState = await win?.getState();
-
   if (windowState === 'maximized') {
     win?.restore();
   } else {
