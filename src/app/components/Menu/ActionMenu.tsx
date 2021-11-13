@@ -69,6 +69,7 @@ const MenuItem = styled.div`
   padding: ${({ theme }) => theme.px.small};
   display: flex;
   align-items: center;
+  transition: background-color ${({ theme }) => theme.transition.base};
   &:hover {
     background-color: ${({ theme }) => theme.palette.brandPrimaryHover};
   }
