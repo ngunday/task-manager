@@ -27,7 +27,7 @@ export const ActionMenu: React.FC = () => {
 
   return (
     <Container>
-      <Label icon={<HamburgerMenuIcon />} text={'Actions'} />
+      <MenuButton icon={<HamburgerMenuIcon />} text={'Actions'} />
       <MenuBoundry>
         <Menu>
           <MenuItem onClick={handleCloseAll}>
@@ -44,12 +44,16 @@ export const ActionMenu: React.FC = () => {
   );
 };
 
+const MenuButton = styled(Label)`
+  cursor: pointer;
+`;
 const MenuBoundry = styled.div`
   position: absolute;
   display: flex;
   visibility: hidden;
   height: 0;
   transition: height ${({ theme }) => theme.transition.base};
+  cursor: pointer;
   z-index: 200;
   left: ${({ theme }) => `-${theme.px.small}`};
   // No suitable value for this in the theme
