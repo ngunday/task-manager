@@ -49,6 +49,7 @@ const Container = styled.div`
 `;
 const LayoutContainer = styled.svg`
   border: 1px solid ${({ theme }) => theme.palette.inputDisabled};
+  margin-top: ${({ theme }) => theme.px.xsmall};
 `;
 const View = styled.rect`
   stroke: ${({ theme }) => theme.palette.inputDisabled};

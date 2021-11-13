@@ -1,8 +1,13 @@
 import React from 'react';
 import { Box, H4, Icon } from '@openfin/ui-library';
 import styled from 'styled-components';
+import { _Window } from 'openfin/_v2/api/window/window';
 
-const win = fin.Window.getCurrentSync();
+let win: _Window | undefined;
+if (typeof fin !== 'undefined') {
+  win = fin.Window.getCurrentSync();
+}
+
 const maximize = async () => {
   const windowState = await win?.getState();
   if (windowState === 'maximized') {

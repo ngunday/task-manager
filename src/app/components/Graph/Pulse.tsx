@@ -63,6 +63,7 @@ const Container = styled.div`
 const GraphContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: ${({ theme }) => theme.px.xsmall};
 `;
 const InnerContainer = styled.div`
   display: flex;
