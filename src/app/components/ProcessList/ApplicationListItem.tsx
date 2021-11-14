@@ -62,7 +62,7 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
         cpuUsage={application.cpuUsage}
         memUsage={application.memUsage}
         pid={application.pid}
-        warning={!application.isRunning ? { icon: <MoonIcon />, text: 'not running' } : undefined}
+        warning={!application.isRunning ? { icon: <MoonIcon />, text: '' } : undefined}
         runtime={application.runtime}
         typePill={
           application.isPlatform

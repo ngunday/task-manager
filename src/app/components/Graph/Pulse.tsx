@@ -16,7 +16,9 @@ export const Pulse: React.FC<Props> = (props: Props) => {
 
   return (
     <Container>
-      <Label icon={<TimerIcon />} text={'Performance'} />
+      <Label text={'Performance'}>
+        <TimerIcon />
+      </Label>
       <GraphContainer>
         <InnerContainer>
           <Graph xmlns={'http://www.w3.org/2000/svg'}>

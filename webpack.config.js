@@ -14,7 +14,7 @@ module.exports = (env, options) => {
       port,
     },
     devtool: 'inline-source-map',
-    entry: path.resolve(__dirname, 'src/index.ts'),
+    entry: path.resolve(__dirname, 'src/index.tsx'),
     externals: { fdc3: 'fdc3', fin: 'fin' },
     output: {
       filename: 'index.js',

@@ -3,28 +3,26 @@ export interface Pill {
   icon: JSX.Element;
 }
 
-export enum Page {
-  Processes,
-  Workspace,
-}
-
 export enum LoadState {
-  LOADING = 'loading',
-  ERROR = 'error',
-  LOADED = 'loaded',
+  Loading = 'loading',
+  Error = 'error',
+  Loaded = 'loaded',
 }
 
 export enum SortOrder {
-  ASCENDING = 'asc',
-  DESCENDING = 'des',
+  Ascending = 'asc',
+  Descending = 'des',
 }
 
 export enum SortField {
-  NAME = 'name',
-  CPU = 'cpu',
-  MEMORY = 'memory',
+  Name = 'name',
+  Cpu = 'cpu',
+  Memory = 'memory',
 }
 
+export enum Modals {
+  Launch = 'launch',
+}
 export interface SortMode {
   field: SortField;
   order: SortOrder;
@@ -35,4 +33,10 @@ export interface Action {
   action: () => void;
   tooltip?: string;
   active?: boolean;
+}
+
+export interface Modal {
+  type: Modals;
+  title: string;
+  payload?: string;
 }

@@ -75,7 +75,10 @@ export const ListItem: React.FC<Props> = (props: Props) => {
       <Info indentation={indentation}>
         <Chevron>
           {onExpand && (
-            <IconButton icon={expanded ? <ChevronDownIcon /> : <ChevronRightIcon />} action={onExpand} transparent />
+            <IconButton action={onExpand} transparent>
+              {' '}
+              {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}{' '}
+            </IconButton>
           )}
         </Chevron>
         {icon}
@@ -86,12 +89,13 @@ export const ListItem: React.FC<Props> = (props: Props) => {
           <Actions>
             {actionList.map((action, index) => (
               <IconButton
-                icon={action.icon}
                 tooltip={action.tooltip}
                 active={action.active}
                 action={action.action}
                 key={`${name}-${action.active ? '' : 'in'}active-action-${index}`}
-              />
+              >
+                {action.icon}
+              </IconButton>
             ))}
           </Actions>
           {runtime !== undefined && <Cell> {runtime} </Cell>}
@@ -118,6 +122,7 @@ const Actions = styled.div`
   padding-left: ${({ theme }) => theme.px.xxxlarge};
   overflow-x: hidden;
   transition: opacity ${({ theme }) => theme.transition.base};
+  gap: ${({ theme }) => theme.px.xsmall};
   width: 0;
   opacity: 0;
 `;

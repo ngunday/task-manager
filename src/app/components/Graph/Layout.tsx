@@ -20,7 +20,9 @@ export const Layout: React.FC<Props> = (props: Props) => {
 
   return (
     <Container>
-      <Label icon={<ViewHorizontalIcon />} text={'Layout'} />
+      <Label text={'Layout'}>
+        <ViewHorizontalIcon />
+      </Label>
       <LayoutContainer
         width={size.width}
         height={size.height}

@@ -17,7 +17,7 @@ export const AppLogo: React.FC<Props> = (props: Props) => {
   const imageState = useLoaded(src);
   const initials = alt?.substr(0, 1);
   const hasImg = !!src;
-  const hasImgNotFailing = hasImg && imageState !== LoadState.ERROR;
+  const hasImgNotFailing = hasImg && imageState !== LoadState.Error;
   const title = !hasImgNotFailing && tooltip ? alt : undefined;
   const backgroundColor = !hasImgNotFailing ? generateHslColor(alt) : 'transparent';
 

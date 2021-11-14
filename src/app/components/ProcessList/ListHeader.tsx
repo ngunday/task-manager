@@ -5,6 +5,7 @@ import { setSortMode } from '../../store/slices/sorting';
 import { SortField } from '../../model/UI';
 import { useDispatch } from 'react-redux';
 import { SortIcon } from '../SortIcon/SortIcon';
+import { Z_INDEX_HEADER } from '../../constants';
 
 export const ListHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,13 @@ export const ListHeader: React.FC = () => {
           <GearIcon />
           <CellText> Runtime </CellText>
         </Cell>
-        <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.CPU))}>
-          <SortIcon field={SortField.CPU} />
+        <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.Cpu))}>
+          <SortIcon field={SortField.Cpu} />
           <LapTimerIcon />
           <CellText> CPU </CellText>
         </CompactCell>
-        <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.MEMORY))}>
-          <SortIcon field={SortField.MEMORY} />
+        <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.Memory))}>
+          <SortIcon field={SortField.Memory} />
           <StackIcon />
           <CellText> Memory </CellText>
         </Cell>
@@ -43,7 +44,7 @@ const Container = styled.div`
   top: 0;
   position: sticky;
   backdrop-filter: blur(15px);
-  z-index: 100;
+  z-index: ${Z_INDEX_HEADER};
 `;
 const RightBar = styled.div`
   padding-right: ${({ theme }) => theme.px.small};

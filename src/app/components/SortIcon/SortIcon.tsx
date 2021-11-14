@@ -14,7 +14,7 @@ export const SortIcon: React.FC<Props> = (props: Props) => {
   const sortMode = useSelector(selectSortMode);
 
   if (sortMode.field === field) {
-    return sortMode.order === SortOrder.DESCENDING ? <Descending /> : <Ascending />;
+    return sortMode.order === SortOrder.Descending ? <Descending /> : <Ascending />;
   }
   return <></>;
 };

@@ -1,16 +1,20 @@
 import * as React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { Provider } from 'react-redux';
-import store from './store/store';
 import { ThemeProvider, Mixins, Typography } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
-import { Applications } from './pages/Applications';
-import { CubeIcon } from '@modulz/radix-icons';
 import { ActionMenu } from './components/Menu/ActionMenu';
 import { Label } from './components/Label/Label';
+import { List } from './components/ProcessList/List';
+import { CubeIcon } from '@modulz/radix-icons';
+import { useProcessPoll } from './hooks/useProcessPoll';
+import { Modal } from './components/Modal/Modal';
+import { selectModal } from './store/slices/modal';
+import { useSelector } from 'react-redux';
 
 export const App: React.FC = () => {
   const [version, setVersion] = React.useState('0.0.0.0');
+  const processPoll = useProcessPoll();
+  const modal = useSelector(selectModal);
 
   React.useEffect(() => {
     fin.System.getRvmInfo().then((info) => {
@@ -19,23 +23,24 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider scheme="dark">
-        <GlobalStyle />
-        <Container>
-          <Header title={'OpenFin Process Manager'} />
-          <Body>
-            <TopBar>
-              <ActionMenu />
-              <VersionLabel icon={<CubeIcon />} text={`RVM Version: ${version}`} />
-            </TopBar>
-            <PageContainer>
-              <Applications />
-            </PageContainer>
-          </Body>
-        </Container>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider scheme="dark">
+      <GlobalStyle />
+      <Container>
+        <Header title={'OpenFin Process Manager'} />
+        <Body>
+          <TopBar>
+            <ActionMenu />
+            <VersionLabel text={`RVM Version: ${version}`}>
+              <CubeIcon />
+            </VersionLabel>
+          </TopBar>
+          <ListContainer>
+            <List applications={processPoll} />
+            {modal && <Modal modal={modal} />}
+          </ListContainer>
+        </Body>
+      </Container>
+    </ThemeProvider>
   );
 };
 
@@ -66,10 +71,17 @@ const TopBar = styled.div`
 const VersionLabel = styled(Label)`
   margin-left: auto;
 `;
-const PageContainer = styled.div`
+const ListContainer = styled.div`
+  position: relative;
   display: flex;
+  flex-direction: column;
   flex: 1;
+  background-color: ${({ theme }) => theme.palette.background1};
+  border-radius: ${({ theme }) => theme.radius.base};
   overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid ${({ theme }) => theme.palette.background5};
+  box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
 `;
 const Body = styled.div`
   display: flex;

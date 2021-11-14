@@ -2,7 +2,7 @@ import { ApplicationOption } from 'openfin/_v2/api/application/applicationOption
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Application, Process, Pulse } from '../model/Shapes';
-import { OFManifest, OFApplication, OFApplicationInfo, OFViewCreationOptions } from '../model/OpenFinShim';
+import { OFManifest, OFApplication, OFApplicationInfo, OFViewCreationOptions } from '../model/OFShim';
 import { SortField, SortOrder } from '../model/UI';
 import { selectApplications, setApplications } from '../store/slices/applications';
 import { submitPulse } from '../store/slices/pulse';
@@ -128,18 +128,18 @@ export const useProcessPoll = (): Application[] => {
   }, []);
 
   React.useEffect(() => {
-    const asc = sortMode.order === SortOrder.ASCENDING;
+    const asc = sortMode.order === SortOrder.Ascending;
     const apps = [...unsortedApps];
 
     apps.sort((a, b) => {
       switch (sortMode.field) {
-        case SortField.CPU: {
+        case SortField.Cpu: {
           return (a.cpuUsage - b.cpuUsage) * (asc ? 1 : -1);
         }
-        case SortField.MEMORY: {
+        case SortField.Memory: {
           return (a.memUsage - b.memUsage) * (asc ? 1 : -1);
         }
-        case SortField.NAME: {
+        case SortField.Name: {
           // Name sorting is always A->Z
           return a.displayName.localeCompare(b.displayName);
         }

@@ -14,25 +14,25 @@ export const sortingSlice = createSlice({
   name: 'sorting',
   initialState: {
     value: {
-      field: SortField.NAME,
-      order: SortOrder.ASCENDING,
+      field: SortField.Name,
+      order: SortOrder.Ascending,
     },
   },
   reducers: {
     setSortMode: (state: SortingRootState['sorting'], action: SortingAction) => {
       const field =
-        state.value.field === action.payload && state.value.order === SortOrder.ASCENDING
-          ? SortField.NAME
+        state.value.field === action.payload && state.value.order === SortOrder.Ascending
+          ? SortField.Name
           : action.payload;
       const order =
-        state.value.field === action.payload && state.value.order === SortOrder.DESCENDING
-          ? SortOrder.ASCENDING
-          : SortOrder.DESCENDING;
+        state.value.field === action.payload && state.value.order === SortOrder.Descending
+          ? SortOrder.Ascending
+          : SortOrder.Descending;
       state.value = action.payload
         ? { field, order }
         : {
-            field: SortField.NAME,
-            order: SortOrder.ASCENDING,
+            field: SortField.Name,
+            order: SortOrder.Ascending,
           };
     },
   },

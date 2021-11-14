@@ -1,16 +1,17 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Z_INDEX_MENU } from '../../constants';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  icon: JSX.Element;
   action?: () => void;
   tooltip?: string;
   active?: boolean;
   transparent?: boolean;
+  large?: boolean;
 }
 
 export const IconButton: React.FC<Props> = (props: Props) => {
-  const { icon, action, tooltip, active = false, transparent = false, ...rest } = props;
+  const { action, tooltip, large = false, active = false, transparent = false, children, ...rest } = props;
 
   const handleClick = (actionCb?: () => void) => (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -19,8 +20,8 @@ export const IconButton: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <Container onClick={handleClick(action)} selected={active} transparent={transparent} {...rest}>
-      {icon}
+    <Container onClick={handleClick(action)} selected={active} transparent={transparent} large={large} {...rest}>
+      {children}
       {tooltip && <Tooltip>{tooltip}</Tooltip>}
     </Container>
   );
@@ -31,20 +32,19 @@ const Tooltip = styled.div`
   transition: opacity ${({ theme }) => theme.transition.base};
   background-color: ${({ theme }) => theme.palette.background1};
   border: 1px solid ${({ theme }) => theme.palette.background5};
-  z-index: 200;
+  z-index: ${Z_INDEX_MENU};
   box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
-  top: ${({ theme }) => `-${theme.px.xxlarge}`};
+  bottom: ${({ theme }) => `${theme.unit.xxxlarge + theme.unit.small}px`};
   opacity: 0;
   pointer-events: none;
   padding: ${({ theme }) => `${theme.px.xsmall} ${theme.px.small}`};
   overflow: hidden;
 `;
-const Container = styled.div<{ selected: boolean; transparent: boolean }>`
-  height: ${({ theme }) => theme.px.xxlarge};
-  min-width: ${({ theme }) => theme.px.xxlarge};
+const Container = styled.div<{ selected: boolean; transparent: boolean; large: boolean }>`
+  height: ${({ theme, large }) => (large ? theme.px.xxxlarge : theme.px.xxlarge)};
+  min-width: ${({ theme, large }) => (large ? theme.px.xxxlarge : theme.px.xxlarge)};
   padding: ${({ theme }) => theme.px.xsmall};
   display: flex;
-  margin-right: ${({ theme }) => theme.px.small};
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.radius.small};

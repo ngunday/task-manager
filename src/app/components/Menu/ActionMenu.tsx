@@ -1,11 +1,15 @@
-import { ExitIcon, HamburgerMenuIcon, TrashIcon } from '@modulz/radix-icons';
+import { ExitIcon, HamburgerMenuIcon, RocketIcon, TrashIcon } from '@modulz/radix-icons';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { Z_INDEX_MENU } from '../../constants';
+import { Modals } from '../../model/UI';
 import { selectApplications } from '../../store/slices/applications';
+import { showModal } from '../../store/slices/modal';
 import { Label } from '../Label/Label';
 
 export const ActionMenu: React.FC = () => {
+  const dispatch = useDispatch();
   const applications = useSelector(selectApplications);
 
   const handleCloseAll = () => {
@@ -21,20 +25,22 @@ export const ActionMenu: React.FC = () => {
       });
   };
 
-  const handleQuit = () => {
-    fin.Application.getCurrentSync().quit();
-  };
-
   return (
     <Container>
-      <MenuButton icon={<HamburgerMenuIcon />} text={'Actions'} />
+      <MenuButton text={'Actions'}>
+        <HamburgerMenuIcon />
+      </MenuButton>
       <MenuBoundry>
         <Menu>
-          <MenuItem onClick={handleCloseAll}>
+          <MenuItem onClick={() => dispatch(showModal({ type: Modals.Launch, title: 'Launch Application' }))}>
+            <RocketIcon />
+            <MenuItemName> Launch Application </MenuItemName>
+          </MenuItem>
+          <MenuItem onClick={() => fin.Application.getCurrentSync().quit()}>
             <TrashIcon />
             <MenuItemName> Close All Applications </MenuItemName>
           </MenuItem>
-          <MenuItem onClick={handleQuit}>
+          <MenuItem onClick={handleCloseAll}>
             <ExitIcon />
             <MenuItemName> Quit Process Manager </MenuItemName>
           </MenuItem>
@@ -54,7 +60,7 @@ const MenuBoundry = styled.div`
   height: 0;
   transition: height ${({ theme }) => theme.transition.base};
   cursor: pointer;
-  z-index: 200;
+  z-index: ${Z_INDEX_MENU};
   left: ${({ theme }) => `-${theme.px.small}`};
   // No suitable value for this in the theme
   top: 6px;
@@ -90,6 +96,6 @@ const Container = styled.div`
   display: flex;
   &:hover ${MenuBoundry} {
     visibility: visible;
-    height: 94px;
+    height: 128px;
   }
 `;

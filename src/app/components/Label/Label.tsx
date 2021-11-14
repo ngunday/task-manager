@@ -2,15 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: JSX.Element;
   text: string;
 }
 
 export const Label: React.FC<Props> = (props: Props) => {
-  const { icon, text, ...rest } = props;
+  const { text, children, ...rest } = props;
   return (
     <Container {...rest}>
-      {icon}
+      {children}
       <LabelText> {text} </LabelText>
     </Container>
   );
