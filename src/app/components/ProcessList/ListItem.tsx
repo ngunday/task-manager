@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChevronDownIcon, ChevronRightIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/UI';
 import { Pill } from '../Pill/Pill';
 import { IconButton } from '../Button/IconButton';
-import { DefinitionList } from '@openfin/ui-library';
+import { Box, DefinitionList, Icon } from '@openfin/ui-library';
 
 interface Props {
     name: string;
@@ -56,7 +55,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
         setActionList([
             {
                 active: showDetails,
-                icon: <MagnifyingGlassIcon />,
+                icon: <Icon icon={'MagnifyingGlassIcon'} />,
                 action: () => setShowDetails(!showDetails),
                 tooltip: showDetails ? 'Hide Details' : 'Show Details',
             },
@@ -76,8 +75,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
                 <Chevron>
                     {onExpand && (
                         <IconButton action={onExpand} transparent>
-                            {' '}
-                            {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}{' '}
+                            <Icon icon={expanded ? 'TriangleDownIcon' : 'TriangleRightIcon'} />
                         </IconButton>
                     )}
                 </Chevron>
@@ -117,7 +115,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
         </Container>
     );
 };
-const Actions = styled.div`
+const Actions = styled(Box)`
     display: flex;
     padding-left: ${({ theme }) => theme.px.xxxlarge};
     overflow-x: hidden;
@@ -137,7 +135,6 @@ const WarningPill = styled(Pill)`
     background-color: ${({ theme }) => theme.palette.statusCritical};
 `;
 const Container = styled.div<{ showingDetails: boolean }>`
-    position: relative;
     display: flex;
     flex-direction: column;
     transition: background-color ${({ theme }) => theme.transition.base};
@@ -158,16 +155,17 @@ const Container = styled.div<{ showingDetails: boolean }>`
         opacity: 1;
     }
 `;
-const DetailsContainer = styled.div`
+const DetailsContainer = styled(Box)`
     display: flex;
     flex-direction: row;
 `;
-const GraphContainer = styled.div`
+const GraphContainer = styled(Box)`
     margin: ${({ theme }) => theme.px.small};
     display: flex;
     justify-content: flex-end;
 `;
-const DetailsListContainer = styled.div`
+const DetailsListContainer = styled(Box)`
+    flex-direction: column;
     flex: 1;
 `;
 const Details = styled(DefinitionList)<{ indentation: number }>`
@@ -188,7 +186,7 @@ const Info = styled.div<{ indentation: number }>`
     align-items: center;
     cursor: pointer;
 `;
-const Chevron = styled.div`
+const Chevron = styled(Box)`
     height: ${({ theme }) => theme.px.xxlarge};
     min-width: ${({ theme }) => theme.px.xxlarge};
 `;
@@ -199,13 +197,13 @@ const Name = styled.span`
     overflow: hidden;
     word-wrap: break-word;
 `;
-const RightBar = styled.div`
+const RightBar = styled(Box)`
     padding-right: ${({ theme }) => theme.px.small};
     margin-left: auto;
     display: flex;
     flex-direction: row;
 `;
-const Cell = styled.div`
+const Cell = styled(Box)`
     width: 85px;
     display: flex;
     align-items: center;

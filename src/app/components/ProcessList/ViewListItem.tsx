@@ -1,9 +1,9 @@
 import React from 'react';
-import { GroupIcon, ExitIcon, InputIcon } from '@modulz/radix-icons';
 import { Entity } from '../../model/Shapes';
 import { Action } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
+import { Icon } from '@openfin/ui-library';
 
 interface Props {
     view: Entity;
@@ -18,12 +18,12 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
     React.useEffect(() => {
         setActions([
             {
-                icon: <InputIcon />,
+                icon: <Icon icon={'InputIcon'} />,
                 action: launchDevTools(view.uuid, view.name),
                 tooltip: 'Launch Developer Tools',
             },
             {
-                icon: <ExitIcon />,
+                icon: <Icon icon={'ExitIcon'} />,
                 tooltip: 'Destroy View',
                 action: async () => {
                     const v = await fin.View.wrap({ uuid: view.uuid || '', name: view.name || '' });
@@ -49,7 +49,7 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
     return (
         <ListItem
             name={view.displayName}
-            typePill={{ text: 'View', icon: <GroupIcon /> }}
+            typePill={{ text: 'View', icon: <Icon icon={'GroupIcon'} size={'small'} /> }}
             actions={actions}
             pid={view.pid}
             icon={icon}

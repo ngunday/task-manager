@@ -1,4 +1,4 @@
-import { ExitIcon, HamburgerMenuIcon, RocketIcon, TrashIcon } from '@modulz/radix-icons';
+import { Box, Icon } from '@openfin/ui-library';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -28,20 +28,20 @@ export const ActionMenu: React.FC = () => {
     return (
         <Container>
             <MenuButton text={'Actions'}>
-                <HamburgerMenuIcon />
+                <Icon icon={'HamburgerMenuIcon'} />
             </MenuButton>
             <MenuBoundry>
                 <Menu>
                     <MenuItem onClick={() => dispatch(showModal({ type: Modals.Launch, title: 'Launch Application' }))}>
-                        <RocketIcon />
+                        <Icon icon={'RocketIcon'} />
                         <MenuItemName> Launch Application </MenuItemName>
                     </MenuItem>
                     <MenuItem onClick={() => fin.Application.getCurrentSync().quit()}>
-                        <TrashIcon />
+                        <Icon icon={'TrashIcon'} />
                         <MenuItemName> Close All Applications </MenuItemName>
                     </MenuItem>
                     <MenuItem onClick={handleCloseAll}>
-                        <ExitIcon />
+                        <Icon icon={'ExitIcon'} />
                         <MenuItemName> Quit Process Manager </MenuItemName>
                     </MenuItem>
                 </Menu>
@@ -53,7 +53,7 @@ export const ActionMenu: React.FC = () => {
 const MenuButton = styled(Label)`
     cursor: pointer;
 `;
-const MenuBoundry = styled.div`
+const MenuBoundry = styled(Box)`
     position: absolute;
     display: flex;
     visibility: hidden;
@@ -64,7 +64,7 @@ const MenuBoundry = styled.div`
     left: ${({ theme }) => `-${theme.px.small}`};
     top: 6px;
 `;
-const Menu = styled.div`
+const Menu = styled(Box)`
     background-color: ${({ theme }) => theme.palette.background3};
     border: 1px solid ${({ theme }) => theme.palette.background5};
     border-radius: ${({ theme }) => theme.px.small};
@@ -72,8 +72,9 @@ const Menu = styled.div`
     margin-top: ${({ theme }) => theme.px.xxlarge};
     overflow: hidden;
     flex: 1;
+    flex-direction: column;
 `;
-const MenuItem = styled.div`
+const MenuItem = styled(Box)`
     width: 175px;
     padding: ${({ theme }) => theme.px.small};
     display: flex;
@@ -90,7 +91,7 @@ const MenuItem = styled.div`
 const MenuItemName = styled.span`
     margin-left: ${({ theme }) => theme.px.xsmall};
 `;
-const Container = styled.div`
+const Container = styled(Box)`
     position: relative;
     display: flex;
     &:hover ${MenuBoundry} {

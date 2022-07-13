@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectAppPulse } from '../../store/slices/pulse';
 import { PULSE_HISTORY_LENGTH } from '../../constants';
 import { Label } from '../Label/Label';
-import { TimerIcon } from '@modulz/radix-icons';
+import { Box, Icon } from '@openfin/ui-library';
 
 interface Props {
     uuid: string;
@@ -17,7 +17,7 @@ export const Pulse: React.FC<Props> = (props: Props) => {
     return (
         <Container>
             <Label text={'Performance'}>
-                <TimerIcon />
+                <Icon icon={'TimerIcon'} />
             </Label>
             <GraphContainer>
                 <InnerContainer>
@@ -58,27 +58,27 @@ export const Pulse: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: column;
 `;
-const GraphContainer = styled.div`
+const GraphContainer = styled(Box)`
     display: flex;
     flex-direction: row;
     margin-top: ${({ theme }) => theme.px.xsmall};
 `;
-const InnerContainer = styled.div`
+const InnerContainer = styled(Box)`
     display: flex;
     flex-direction: column;
 `;
-const UsageLegend = styled.div`
+const UsageLegend = styled(Box)`
     height: 126px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-left: 2px;
 `;
-const TimeLegend = styled.div`
+const TimeLegend = styled(Box)`
     width: 241px;
     display: flex;
     justify-content: space-between;

@@ -1,4 +1,3 @@
-import { Cross2Icon } from '@modulz/radix-icons';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -7,6 +6,8 @@ import { Z_INDEX_MENU } from '../../constants';
 import { Modals, Modal as ModalData } from '../../model/UI';
 import { dismissModal } from '../../store/slices/modal';
 import { Launch } from './Launch/Launch';
+import { Box, Icon } from '@openfin/ui-library';
+import { ManifestViewer } from './ManifestViewer/ManifestViewer';
 
 interface Props {
     modal: ModalData;
@@ -20,6 +21,8 @@ export const Modal: React.FC<Props> = (props: Props) => {
         switch (modal.type) {
             case Modals.Launch:
                 return <Launch />;
+            case Modals.ManifestViewer:
+                return <ManifestViewer manifest={modal.payload} />;
         }
     };
 
@@ -29,7 +32,7 @@ export const Modal: React.FC<Props> = (props: Props) => {
                 <Header>
                     {modal.title}
                     <CloseButton onClick={() => dispatch(dismissModal())}>
-                        <Cross2Icon />
+                        <Icon icon={'Cross2Icon'} />
                     </CloseButton>
                 </Header>
                 <Body>{renderModal()}</Body>
@@ -38,9 +41,8 @@ export const Modal: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     position: absolute;
-    top: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -60,12 +62,13 @@ const Container = styled.div`
     }
     animation: blur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 `;
-const ModalWindow = styled.div`
+const ModalWindow = styled(Box)`
+    flex-direction: column;
     background-color: ${({ theme }) => theme.palette.background2};
     border: 1px solid ${({ theme }) => theme.palette.background5};
     box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
     border-radius: ${({ theme }) => theme.radius.base};
-    margin-top: 60px;
+    margin-top: ${({ theme }) => theme.px.xxxlarge};
     @keyframes fadeIn {
         0% {
             opacity: 0;
@@ -76,14 +79,14 @@ const ModalWindow = styled.div`
     }
     animation: fadeIn ${({ theme }) => theme.transition.base} forwards;
 `;
-const Header = styled.div`
+const Header = styled(Box)`
     display: flex;
     align-items: center;
     padding: ${({ theme }) => theme.px.base};
     padding-bottom: ${({ theme }) => theme.px.base};
     border-bottom: 1px solid ${({ theme }) => theme.palette.background4};
 `;
-const Body = styled.div`
+const Body = styled(Box)`
     padding: ${({ theme }) => theme.px.base};
 `;
 const CloseButton = styled(HeaderButton)`

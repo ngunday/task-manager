@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LapTimerIcon, StackIcon, GearIcon, IdCardIcon } from '@modulz/radix-icons';
 import { setSortMode } from '../../store/slices/sorting';
 import { SortField } from '../../model/UI';
 import { useDispatch } from 'react-redux';
 import { SortIcon } from '../SortIcon/SortIcon';
 import { Z_INDEX_HEADER } from '../../constants';
+import { Box, Icon } from '@openfin/ui-library';
 
 export const ListHeader: React.FC = () => {
     const dispatch = useDispatch();
@@ -14,21 +14,21 @@ export const ListHeader: React.FC = () => {
         <Container>
             <RightBar>
                 <Cell>
-                    <GearIcon />
+                    <Icon icon={'GearIcon'} />
                     <CellText> Runtime </CellText>
                 </Cell>
                 <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.Cpu))}>
                     <SortIcon field={SortField.Cpu} />
-                    <LapTimerIcon />
+                    <Icon icon={'LapTimerIcon'} />
                     <CellText> CPU </CellText>
                 </CompactCell>
                 <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.Memory))}>
                     <SortIcon field={SortField.Memory} />
-                    <StackIcon />
+                    <Icon icon={'StackIcon'} />
                     <CellText> Memory </CellText>
                 </Cell>
                 <CompactCell>
-                    <IdCardIcon />
+                    <Icon icon={'IdCardIcon'} />
                     <CellText> PID </CellText>
                 </CompactCell>
             </RightBar>
@@ -36,7 +36,7 @@ export const ListHeader: React.FC = () => {
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: row;
     padding: ${({ theme }) => `${theme.px.base} ${theme.px.base} ${theme.px.xsmall} ${theme.px.base}`};
@@ -46,7 +46,7 @@ const Container = styled.div`
     backdrop-filter: blur(15px);
     z-index: ${Z_INDEX_HEADER};
 `;
-const RightBar = styled.div`
+const RightBar = styled(Box)`
     padding-right: ${({ theme }) => theme.px.small};
     margin-left: auto;
     display: flex;

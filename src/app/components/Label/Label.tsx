@@ -1,3 +1,4 @@
+import { Box } from '@openfin/ui-library';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -15,7 +16,7 @@ export const Label: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     align-items: center;
 `;

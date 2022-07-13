@@ -1,11 +1,11 @@
 import React from 'react';
-import { InputIcon, EyeNoneIcon, EyeOpenIcon, ResetIcon, ExitIcon, BoxModelIcon } from '@modulz/radix-icons';
 import { Window } from '../../model/Shapes';
 import { Action } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { ViewListItem } from './ViewListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { Layout } from '../Graph/Layout';
+import { Icon } from '@openfin/ui-library';
 
 interface Props {
     window: Window;
@@ -23,7 +23,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
         if (window.uuid !== fin.me.uuid) {
             conditional = [
                 {
-                    icon: window.isShowing ? <EyeNoneIcon /> : <EyeOpenIcon />,
+                    icon: <Icon icon={window.isShowing ? 'EyeNoneIcon' : 'EyeOpenIcon'} />,
                     tooltip: window.isShowing ? 'Hide Window' : 'Show Window',
                     active: window.isShowing,
                     action: async () => {
@@ -40,7 +40,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
                     },
                 },
                 {
-                    icon: <ResetIcon />,
+                    icon: <Icon icon={'ResetIcon'} />,
                     tooltip: 'Rescue Off-Screen Window',
                     action: async () => {
                         const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
@@ -55,7 +55,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
                     },
                 },
                 {
-                    icon: <ExitIcon />,
+                    icon: <Icon icon={'ExitIcon'} />,
                     tooltip: 'Close Window',
                     action: async () => {
                         const win = await fin.Window.wrap({ uuid: window.uuid || '', name: window.name || '' });
@@ -70,7 +70,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
         }
         setActions([
             {
-                icon: <InputIcon />,
+                icon: <Icon icon={'InputIcon'} />,
                 action: launchDevTools(window.uuid, window.name),
                 tooltip: 'Launch Developer Tools',
             },
@@ -91,7 +91,7 @@ export const WindowListItem: React.FC<Props> = (props: Props) => {
         <>
             <ListItem
                 name={window.displayName}
-                typePill={{ text: 'window', icon: <BoxModelIcon /> }}
+                typePill={{ text: 'window', icon: <Icon icon={'BoxModelIcon'} size={'small'} /> }}
                 actions={actions}
                 expanded={expanded}
                 pid={window.pid}

@@ -1,3 +1,4 @@
+import { Box } from '@openfin/ui-library';
 import React from 'react';
 import styled from 'styled-components';
 import { Pill as PillData } from '../../model/UI';
@@ -15,14 +16,15 @@ export const Pill: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Icon = styled.div`
+const Icon = styled(Box)`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-end;
     padding-right: ${({ theme }) => theme.px.xsmall};
     width: ${({ theme }) => theme.px.large};
 `;
-const Container = styled.div`
+const Container = styled(Box)`
     font-size: ${({ theme }) => theme.fontSize.small};
     border-radius: ${({ theme }) => theme.px.base};
     text-transform: capitalize;

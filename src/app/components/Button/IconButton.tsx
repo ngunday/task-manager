@@ -1,3 +1,4 @@
+import { Box } from '@openfin/ui-library';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Z_INDEX_MENU } from '../../constants';
@@ -27,14 +28,15 @@ export const IconButton: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Tooltip = styled.div`
+const Tooltip = styled(Box)`
+    display: block;
     position: absolute;
     transition: opacity ${({ theme }) => theme.transition.base};
     background-color: ${({ theme }) => theme.palette.background1};
     border: 1px solid ${({ theme }) => theme.palette.background5};
     z-index: ${Z_INDEX_MENU};
     box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
-    bottom: ${({ theme }) => `${theme.unit.xxxlarge + theme.unit.small}px`};
+    top: ${({ theme }) => theme.px.xxxxlarge};
     opacity: 0;
     pointer-events: none;
     padding: ${({ theme }) => `${theme.px.xsmall} ${theme.px.small}`};

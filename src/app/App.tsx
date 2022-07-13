@@ -1,11 +1,10 @@
 import * as React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { ThemeProvider, Mixins, Typography } from '@openfin/ui-library';
+import { ThemeProvider, Mixins, Typography, Icon, Box } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
 import { ActionMenu } from './components/Menu/ActionMenu';
 import { Label } from './components/Label/Label';
 import { List } from './components/ProcessList/List';
-import { CubeIcon } from '@modulz/radix-icons';
 import { useProcessPoll } from './hooks/useProcessPoll';
 import { Modal } from './components/Modal/Modal';
 import { selectModal } from './store/slices/modal';
@@ -31,20 +30,24 @@ export const App: React.FC = () => {
                     <TopBar>
                         <ActionMenu />
                         <VersionLabel text={`RVM Version: ${version}`}>
-                            <CubeIcon />
+                            <Icon icon={'CubeIcon'} />
                         </VersionLabel>
                     </TopBar>
-                    <ListContainer>
-                        <List applications={processPoll} />
+                    <Content>
+                        <ListContainer>
+                            <List applications={processPoll} />
+                        </ListContainer>
                         {modal && <Modal modal={modal} />}
-                    </ListContainer>
+                    </Content>
                 </Body>
             </Container>
         </ThemeProvider>
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
+    display: flex;
+    flex-direction: column;
     background: ${({ theme }) => theme.palette.background2};
     width: 100vw;
     height: 100vh;
@@ -64,26 +67,32 @@ const Container = styled.div`
         ${Mixins.scrollbar.base}
     }
 `;
-const TopBar = styled.div`
+const TopBar = styled(Box)`
     display: flex;
     margin: ${({ theme }) => `0 ${theme.px.base} ${theme.px.small} ${theme.px.base}`};
 `;
 const VersionLabel = styled(Label)`
     margin-left: auto;
 `;
-const ListContainer = styled.div`
+const Content = styled(Box)`
     position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
     background-color: ${({ theme }) => theme.palette.background1};
     border-radius: ${({ theme }) => theme.radius.base};
+    box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
+    border: 1px solid ${({ theme }) => theme.palette.background5};
+    overflow-y: hidden;
+    overflow-x: hidden;
+`;
+const ListContainer = styled(Box)`
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    border: 1px solid ${({ theme }) => theme.palette.background5};
-    box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
 `;
-const Body = styled.div`
+const Body = styled(Box)`
     display: flex;
     flex-direction: column;
     height: ${({ theme }) => `calc(100% - ${theme.px.xxxxlarge})`};

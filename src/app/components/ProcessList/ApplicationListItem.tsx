@@ -1,12 +1,14 @@
 import React from 'react';
-import { MoonIcon, InputIcon, ExitIcon, DashboardIcon, LayersIcon } from '@modulz/radix-icons';
 import { Application } from '../../model/Shapes';
-import { Action } from '../../model/UI';
+import { Action, Modals } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
 import { AppLogo } from '../AppLogo/AppLogo';
 import { Pulse } from '../Graph/Pulse';
+import { Icon } from '@openfin/ui-library';
+import { showModal } from '../../store/slices/modal';
+import { useDispatch } from 'react-redux';
 
 interface Props {
     application: Application;
@@ -14,6 +16,7 @@ interface Props {
 
 export const ApplicationListItem: React.FC<Props> = (props: Props) => {
     const { application } = props;
+    const dispatch = useDispatch();
     const [showWindows, setShowWindows] = React.useState(false);
     const [actions, setActions] = React.useState<Action[]>([]);
     const [details, setDetails] = React.useState<[string, string][]>([]);
@@ -23,15 +26,34 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
         const conditional = [];
         if (application.isRunning) {
             conditional.push({
-                icon: <InputIcon />,
+                icon: <Icon icon={'InputIcon'} />,
                 action: launchDevTools(application.uuid),
                 tooltip: 'Launch Developer Tools',
             });
         }
         setActions([
+            {
+                icon: <Icon icon={'ReaderIcon'} />,
+                action: async () => {
+                    const app = await fin.Application.wrap({ uuid: application.uuid || '' });
+                    try {
+                        const manifest = await app.getManifest();
+                        dispatch(
+                            showModal({
+                                type: Modals.ManifestViewer,
+                                title: `${application.displayName} Manifest`,
+                                payload: manifest,
+                            })
+                        );
+                    } catch (e) {
+                        /* do nothing */
+                    }
+                },
+                tooltip: 'Show Manifest',
+            },
             ...conditional,
             {
-                icon: <ExitIcon />,
+                icon: <Icon icon={'ExitIcon'} />,
                 action: async () => {
                     const app = await fin.Application.wrap({ uuid: application.uuid || '' });
                     try {
@@ -62,12 +84,12 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
                 cpuUsage={application.cpuUsage}
                 memUsage={application.memUsage}
                 pid={application.pid}
-                warning={!application.isRunning ? { icon: <MoonIcon />, text: '' } : undefined}
+                warning={!application.isRunning ? { icon: <Icon icon={'MoonIcon'} />, text: '' } : undefined}
                 runtime={application.runtime}
                 typePill={
                     application.isPlatform
-                        ? { text: 'platform', icon: <LayersIcon /> }
-                        : { text: 'application', icon: <DashboardIcon /> }
+                        ? { text: 'platform', icon: <Icon icon={'LayersIcon'} size={'small'} /> }
+                        : { text: 'application', icon: <Icon icon={'DashboardIcon'} size={'small'} /> }
                 }
                 details={details}
                 expanded={showWindows}

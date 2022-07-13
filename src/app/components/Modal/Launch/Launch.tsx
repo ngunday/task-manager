@@ -1,5 +1,4 @@
-import { FileTextIcon, Link1Icon } from '@modulz/radix-icons';
-import { Button, TextInput } from '@openfin/ui-library';
+import { Box, Button, Icon, TextInput } from '@openfin/ui-library';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -60,7 +59,7 @@ export const Launch: React.FC = () => {
                         active={launchFromManifest}
                         large
                     >
-                        <FileTextIcon />
+                        <Icon icon={'FileTextIcon'} />
                     </IconButton>
                     <IconButton
                         action={() => setLaunchFromManifest(false)}
@@ -68,7 +67,7 @@ export const Launch: React.FC = () => {
                         active={!launchFromManifest}
                         large
                     >
-                        <Link1Icon />
+                        <Icon icon={'Link1Icon'} />
                     </IconButton>
                 </Switch>
             </Body>
@@ -85,21 +84,20 @@ export const Launch: React.FC = () => {
 const Input = styled(TextInput)`
     min-width: 300px;
 `;
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: column;
 `;
-const Body = styled.div`
-    position: relative;
+const Body = styled(Box)`
     display: flex;
     margin: ${({ theme }) => `${theme.px.base} 0`};
 `;
-const Buttons = styled.div`
+const Buttons = styled(Box)`
     display: flex;
     justify-content: flex-end;
     gap: ${({ theme }) => theme.px.small};
 `;
-const Switch = styled.div`
+const Switch = styled(Box)`
     display: flex;
     gap: ${({ theme }) => theme.px.small};
     margin-left: ${({ theme }) => theme.px.small};

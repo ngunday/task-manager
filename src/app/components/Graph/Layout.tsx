@@ -1,4 +1,4 @@
-import { ViewHorizontalIcon } from '@modulz/radix-icons';
+import { Box, Icon } from '@openfin/ui-library';
 import React from 'react';
 import styled from 'styled-components';
 import { Window } from '../../model/Shapes';
@@ -21,7 +21,7 @@ export const Layout: React.FC<Props> = (props: Props) => {
     return (
         <Container>
             <Label text={'Layout'}>
-                <ViewHorizontalIcon />
+                <Icon icon={'ViewHorizontalIcon'} />
             </Label>
             <LayoutContainer
                 width={size.width}
@@ -43,7 +43,7 @@ export const Layout: React.FC<Props> = (props: Props) => {
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: column;
     min-width: 268px;

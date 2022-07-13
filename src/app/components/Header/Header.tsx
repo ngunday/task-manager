@@ -1,8 +1,7 @@
 import React from 'react';
-import { Icon } from '@openfin/ui-library';
+import { Box, Icon } from '@openfin/ui-library';
 import styled from 'styled-components';
 import { _Window } from 'openfin/_v2/api/window/window';
-import { Cross2Icon, MinusIcon, SizeIcon } from '@modulz/radix-icons';
 import { HeaderButton } from '../Button/HeaderButton';
 
 interface Props {
@@ -33,25 +32,25 @@ export const Header: React.FC<Props> = (props: Props) => {
     return (
         <Container>
             <Heading>
-                <LogoIcon icon="OpenFinIcon" />
+                <OpenFinLogo icon={'OpenFinIcon'} size={'base'} />
                 {title}
             </Heading>
             <Buttons>
                 <MinimizeButton onClick={() => window?.minimize()}>
-                    <MinusIcon />
+                    <Icon icon={'MinusIcon'} />
                 </MinimizeButton>
                 <HeaderButton onClick={handleMinMax}>
-                    <SizeIcon />
+                    <Icon icon={'SizeIcon'} />
                 </HeaderButton>
                 <HeaderButton onClick={() => window?.close()}>
-                    <Cross2Icon />
+                    <Icon icon={'Cross2Icon'} />
                 </HeaderButton>
             </Buttons>
         </Container>
     );
 };
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     align-items: center;
     height: ${({ theme }) => theme.px.xxxxlarge};
@@ -65,12 +64,10 @@ const Heading = styled.h4`
     align-items: center;
     line-height: ${({ theme }) => theme.lineHeight.ui};
 `;
-const LogoIcon = styled(Icon)`
-    margin: 0 ${({ theme }) => theme.px.base};
-    width: ${({ theme }) => theme.px.large};
-    height: ${({ theme }) => theme.px.large};
+const OpenFinLogo = styled(Icon)`
+    margin: ${({ theme }) => `0 ${theme.px.small} 0 ${theme.px.base}`};
 `;
-const Buttons = styled.div`
+const Buttons = styled(Box)`
     display: flex;
     margin-left: auto;
     margin-right: ${({ theme }) => theme.px.base};
