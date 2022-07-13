@@ -1,11 +1,11 @@
 import { Box, Icon } from '@openfin/ui-library';
-import React from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { Pill as PillData } from '../../model/UI';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & PillData;
+type Props = HTMLAttributes<HTMLDivElement> & PillData;
 
-export const Pill: React.FC<Props> = ({ icon, text, tooltip, ...rest }) => {
+export const Pill: FC<Props> = ({ icon, text, tooltip, ...rest }) => {
     return (
         <Container title={tooltip} {...rest}>
             <Icon icon={icon} size={'small'} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { setSortMode } from '../../store/slices/sorting';
 import { SortField } from '../../model/UI';
@@ -7,7 +7,7 @@ import { SortIcon } from '../SortIcon/SortIcon';
 import { Z_INDEX_HEADER } from '../../constants';
 import { Box, Icon } from '@openfin/ui-library';
 
-export const ListHeader: React.FC = () => {
+export const ListHeader: FC = () => {
     const dispatch = useDispatch();
 
     const handleCPUSort = () => {

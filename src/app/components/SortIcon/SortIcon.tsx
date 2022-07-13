@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { SortOrder, SortField } from '../../model/UI';
 import { useSelector } from 'react-redux';
 import { selectSortMode } from '../../store/slices/sorting';
@@ -8,7 +8,7 @@ interface Props {
     field: SortField;
 }
 
-export const SortIcon: React.FC<Props> = ({ field }) => {
+export const SortIcon: FC<Props> = ({ field }) => {
     const sortMode = useSelector(selectSortMode);
 
     if (sortMode.field === field) {

@@ -1,5 +1,5 @@
 import { Box, Icon } from '@openfin/ui-library';
-import React from 'react';
+import { useEffect, useState, FC } from 'react';
 import styled from 'styled-components';
 import { Window } from '../../model/Shapes';
 import { Label } from '../Label/Label';
@@ -8,11 +8,11 @@ interface Props {
     window: Window;
 }
 
-export const Layout: React.FC<Props> = (props: Props) => {
+export const Layout: FC<Props> = (props: Props) => {
     const { window } = props;
-    const [size, setSize] = React.useState({ width: 0, height: 0 });
+    const [size, setSize] = useState({ width: 0, height: 0 });
 
-    React.useEffect(() => {
+    useEffect(() => {
         const height = 120;
         const width = 120 * (window.bounds.width / window.bounds.height);
         setSize({ width, height });

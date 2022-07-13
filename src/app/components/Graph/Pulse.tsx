@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { selectAppPulse } from '../../store/slices/pulse';
@@ -10,8 +10,7 @@ interface Props {
     uuid: string;
 }
 
-export const Pulse: React.FC<Props> = (props: Props) => {
-    const { uuid } = props;
+export const Pulse: FC<Props> = ({ uuid }) => {
     const pulse = useSelector(selectAppPulse(uuid));
 
     return (

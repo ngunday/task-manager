@@ -1,15 +1,15 @@
 import { Box, Button, TextInput } from '@openfin/ui-library';
-import * as React from 'react';
+import { FC, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { dismissModal } from '../../../store/slices/modal';
 import { urlToName } from '../../../utils/url';
 import { IconButton } from '../../Button/IconButton';
 
-export const Launch: React.FC = () => {
+export const Launch: FC = () => {
     const dispatch = useDispatch();
-    const [launchFromManifest, setLaunchFromManifest] = React.useState<boolean>(true);
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const [launchFromManifest, setLaunchFromManifest] = useState<boolean>(true);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleLaunch = async () => {
         if (inputRef.current) {

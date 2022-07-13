@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { ThemeProvider, Mixins, Typography, Icon, Box } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
@@ -10,12 +10,12 @@ import { Modal } from './components/Modal/Modal';
 import { selectModal } from './store/slices/modal';
 import { useSelector } from 'react-redux';
 
-export const App: React.FC = () => {
-    const [version, setVersion] = React.useState('0.0.0.0');
+export const App: FC = () => {
+    const [version, setVersion] = useState('0.0.0.0');
     const processPoll = useProcessPoll();
     const modal = useSelector(selectModal);
 
-    React.useEffect(() => {
+    useEffect(() => {
         fin.System.getRvmInfo().then((info) => {
             setVersion(info.version);
         });

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Application } from '../../model/Shapes';
 import { Action, Modals } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
@@ -14,14 +14,14 @@ interface Props {
     application: Application;
 }
 
-export const ApplicationListItem: React.FC<Props> = ({ application }) => {
+export const ApplicationListItem: FC<Props> = ({ application }) => {
     const dispatch = useDispatch();
-    const [showWindows, setShowWindows] = React.useState(false);
-    const [actions, setActions] = React.useState<Action[]>([]);
-    const [details, setDetails] = React.useState<[string, string][]>([]);
-    const [icon, setIcon] = React.useState<JSX.Element | undefined>();
+    const [showWindows, setShowWindows] = useState(false);
+    const [actions, setActions] = useState<Action[]>([]);
+    const [details, setDetails] = useState<[string, string][]>([]);
+    const [icon, setIcon] = useState<JSX.Element | undefined>();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const conditionalActions: Action[] = [];
         if (application.isRunning) {
             conditionalActions.push({

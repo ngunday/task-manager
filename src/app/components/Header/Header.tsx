@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Box, Icon } from '@openfin/ui-library';
 import styled from 'styled-components';
 import { _Window } from 'openfin/_v2/api/window/window';
@@ -8,10 +8,10 @@ interface Props {
     title?: string;
 }
 
-export const Header: React.FC<Props> = ({ title }) => {
-    const [window, setWindow] = React.useState<_Window | undefined>(undefined);
+export const Header: FC<Props> = ({ title }) => {
+    const [window, setWindow] = useState<_Window | undefined>(undefined);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (typeof fin !== 'undefined') {
             setWindow(fin.Window.getCurrentSync());
         }

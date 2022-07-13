@@ -1,12 +1,12 @@
 import { Box } from '@openfin/ui-library';
-import React from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
     text: string;
 }
 
-export const Label: React.FC<Props> = ({ text, children, ...rest }) => {
+export const Label: FC<Props> = ({ text, children, ...rest }) => {
     return (
         <Container {...rest}>
             {children}

@@ -1,18 +1,29 @@
 import { Box } from '@openfin/ui-library';
-import * as React from 'react';
+import { useEffect, useState, FC } from 'react';
 import styled from 'styled-components';
 
 interface Props {
     manifest: unknown;
 }
 
-export const ManifestViewer: React.FC<Props> = (props) => {
-    const { manifest } = props;
+export const ManifestViewer: FC<Props> = ({ manifest }) => {
+    const [manifestString, setManifestString] = useState('');
+
+    useEffect(() => {
+        let manifestStr;
+        try {
+            manifestStr = JSON.stringify(manifest, undefined, 2);
+        } catch (e) {
+            manifestStr = 'Error: Unable to parse manifest.';
+        }
+        setManifestString(manifestStr);
+    }, [manifest]);
+
     return (
         <Container>
             <Body>
                 <Viewer>
-                    <CodeArea>{JSON.stringify(manifest, undefined, 2)}</CodeArea>
+                    <CodeArea>{manifestString}</CodeArea>
                 </Viewer>
             </Body>
         </Container>

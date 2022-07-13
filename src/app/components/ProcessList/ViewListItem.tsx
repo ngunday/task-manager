@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Entity } from '../../model/Shapes';
 import { Action, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
@@ -9,11 +9,11 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const ViewListItem: React.FC<Props> = ({ view, icon }) => {
-    const [actions, setActions] = React.useState<Action[]>([]);
-    const [details, setDetails] = React.useState<[string, string][]>([]);
+export const ViewListItem: FC<Props> = ({ view, icon }) => {
+    const [actions, setActions] = useState<Action[]>([]);
+    const [details, setDetails] = useState<[string, string][]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setActions([
             {
                 icon: 'InputIcon',

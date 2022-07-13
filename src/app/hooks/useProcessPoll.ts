@@ -1,5 +1,5 @@
 import { ApplicationOption } from 'openfin/_v2/api/application/applicationOption';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Application, Process, Pulse } from '../model/Shapes';
 import { OFManifest, OFApplication, OFApplicationInfo, OFViewCreationOptions } from '../model/OFShim';
@@ -9,12 +9,12 @@ import { submitPulse } from '../store/slices/pulse';
 import { selectSortMode } from '../store/slices/sorting';
 
 export const useProcessPoll = (): Application[] => {
-    const [unsortedApps, setUnsortedApps] = React.useState<Application[]>([]);
+    const [unsortedApps, setUnsortedApps] = useState<Application[]>([]);
     const dispatch = useDispatch();
     const sortMode = useSelector(selectSortMode);
     const applications = useSelector(selectApplications);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const pulse: Pulse = {};
         const interval = setInterval(async () => {
             const applicationsInfo = (await fin.System.getAllApplications()).filter((app) => app.uuid);
@@ -129,7 +129,7 @@ export const useProcessPoll = (): Application[] => {
         return () => clearInterval(interval);
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const asc = sortMode.order === SortOrder.Ascending;
         const apps = [...unsortedApps];
 

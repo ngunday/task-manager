@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Application } from '../../model/Shapes';
 import { ApplicationListItem } from './ApplicationListItem';
 import { ListHeader } from './ListHeader';
@@ -7,7 +7,7 @@ interface Props {
     applications: Application[];
 }
 
-export const List: React.FC<Props> = ({ applications }) => {
+export const List: FC<Props> = ({ applications }) => {
     return (
         <>
             <ListHeader />

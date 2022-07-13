@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useEffect, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/UI';
@@ -22,7 +22,7 @@ interface Props {
     details: [string, string][];
 }
 
-export const ListItem: React.FC<PropsWithChildren<Props>> = ({
+export const ListItem: FC<PropsWithChildren<Props>> = ({
     name,
     icon,
     cpuUsage,
@@ -38,17 +38,17 @@ export const ListItem: React.FC<PropsWithChildren<Props>> = ({
     actions,
     children,
 }) => {
-    const [showDetails, setShowDetails] = React.useState(false);
-    const [detailsMap, setDetailsMap] = React.useState<Map<string, string> | undefined>();
-    const [actionList, setActionList] = React.useState<Action[]>([]);
+    const [showDetails, setShowDetails] = useState(false);
+    const [detailsMap, setDetailsMap] = useState<Map<string, string> | undefined>();
+    const [actionList, setActionList] = useState<Action[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setDetailsMap(
             new Map<string, string>(details.length > 0 ? details.filter((detail) => detail[0] && detail[1]) : undefined)
         );
     }, [details]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setActionList([
             {
                 active: showDetails,
@@ -60,7 +60,7 @@ export const ListItem: React.FC<PropsWithChildren<Props>> = ({
         ]);
     }, [actions, showDetails]);
 
-    const handleExpand = (event: React.MouseEvent) => {
+    const handleExpand = (event: MouseEvent) => {
         event.stopPropagation();
         event.preventDefault();
         onExpand && onExpand();

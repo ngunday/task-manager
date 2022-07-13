@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
-export interface BaseButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface BaseButtonProps extends HTMLAttributes<HTMLButtonElement> {
     action?: () => void;
     tooltip?: string;
     active?: boolean;
@@ -9,7 +9,7 @@ export interface BaseButtonProps extends React.HTMLAttributes<HTMLButtonElement>
     large?: boolean;
 }
 
-export const BaseButton: React.FC<BaseButtonProps> = ({
+export const BaseButton: FC<BaseButtonProps> = ({
     action,
     tooltip,
     large = false,

@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-export const HeaderButton: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({ children, ...rest }) => {
+export const HeaderButton: FC<HTMLAttributes<HTMLButtonElement>> = ({ children, ...rest }) => {
     return <Container {...rest}>{children}</Container>;
 };
 

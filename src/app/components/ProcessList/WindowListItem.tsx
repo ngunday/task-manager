@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Window } from '../../model/Shapes';
 import { Action, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
@@ -11,12 +11,12 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const WindowListItem: React.FC<Props> = ({ window, icon }) => {
-    const [expanded, setExpanded] = React.useState(false);
-    const [actions, setActions] = React.useState<Action[]>([]);
-    const [details, setDetails] = React.useState<[string, string][]>([]);
+export const WindowListItem: FC<Props> = ({ window, icon }) => {
+    const [expanded, setExpanded] = useState(false);
+    const [actions, setActions] = useState<Action[]>([]);
+    const [details, setDetails] = useState<[string, string][]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         let conditionalActions: Action[] = [];
         if (window.uuid !== fin.me.uuid) {
             conditionalActions = [

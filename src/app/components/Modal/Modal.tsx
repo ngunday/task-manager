@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { HeaderButton } from '../Button/HeaderButton';
@@ -13,8 +13,7 @@ interface Props {
     modal: ModalData;
 }
 
-export const Modal: React.FC<Props> = (props: Props) => {
-    const { modal } = props;
+export const Modal: FC<Props> = ({ modal }) => {
     const dispatch = useDispatch();
 
     const renderModal = () => {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { Icon, IconSizeType, FontSize } from '@openfin/ui-library';
 import { generateHslColor } from '../../utils/generateHslColor';
@@ -12,9 +12,9 @@ interface Props {
     tooltip?: boolean;
 }
 
-export const EntityLogo: React.FC<Props> = ({ src, alt, tooltip, size }) => {
+export const EntityLogo: FC<Props> = ({ src, alt, tooltip, size }) => {
     const imageState = useLoaded(src);
-    const initials = alt?.substr(0, 1);
+    const initials = alt?.substring(0, 1);
     const hasImg = !!src;
     const hasImgNotFailing = hasImg && imageState !== LoadState.Error;
     const title = !hasImgNotFailing && tooltip ? alt : undefined;

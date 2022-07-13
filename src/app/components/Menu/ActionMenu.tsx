@@ -1,5 +1,5 @@
 import { Box, Icon } from '@openfin/ui-library';
-import React from 'react';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Z_INDEX_MENU } from '../../constants';
@@ -8,7 +8,7 @@ import { selectApplications } from '../../store/slices/applications';
 import { showModal } from '../../store/slices/modal';
 import { Label } from '../Label/Label';
 
-export const ActionMenu: React.FC = () => {
+export const ActionMenu: FC = () => {
     const dispatch = useDispatch();
     const applications = useSelector(selectApplications);
 
