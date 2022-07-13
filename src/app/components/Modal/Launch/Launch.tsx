@@ -1,4 +1,4 @@
-import { Box, Button, Icon, TextInput } from '@openfin/ui-library';
+import { Box, Button, TextInput } from '@openfin/ui-library';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';

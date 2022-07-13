@@ -4,7 +4,7 @@ import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/UI';
 import { Pill } from '../Pill/Pill';
 import { IconButton } from '../Button/IconButton';
-import { Box, DefinitionList, Icon } from '@openfin/ui-library';
+import { Box, DefinitionList } from '@openfin/ui-library';
 
 interface Props {
     name: string;

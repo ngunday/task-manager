@@ -42,5 +42,5 @@ export interface Action {
 export interface Modal {
     type: Modals;
     title: string;
-    payload?: any;
+    payload?: unknown;
 }

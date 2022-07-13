@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-    manifest: any;
+    manifest: unknown;
 }
 
 export const ManifestViewer: React.FC<Props> = (props) => {

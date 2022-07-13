@@ -3,7 +3,6 @@ import { Entity } from '../../model/Shapes';
 import { Action, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
-import { Icon } from '@openfin/ui-library';
 
 interface Props {
     view: Entity;
