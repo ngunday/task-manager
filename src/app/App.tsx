@@ -60,7 +60,6 @@ const Container = styled(Box)`
         right: 1px;
         bottom: 1px;
         box-shadow: 0 0 1px 1px ${({ theme }) => theme.palette.background4};
-        border-radius: ${({ theme }) => theme.radius.base};
     }
     &,
     * {
