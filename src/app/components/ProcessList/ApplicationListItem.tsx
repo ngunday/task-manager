@@ -4,9 +4,9 @@ import { Action, Modals } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
-import { AppLogo } from '../AppLogo/AppLogo';
+import { EntityLogo } from '../AppLogo/EntityLogo';
 import { Pulse } from '../Graph/Pulse';
-import { Icon } from '@openfin/ui-library';
+import { Pill } from '../../model/UI';
 import { showModal } from '../../store/slices/modal';
 import { useDispatch } from 'react-redux';
 
@@ -14,8 +14,7 @@ interface Props {
     application: Application;
 }
 
-export const ApplicationListItem: React.FC<Props> = (props: Props) => {
-    const { application } = props;
+export const ApplicationListItem: React.FC<Props> = ({ application }) => {
     const dispatch = useDispatch();
     const [showWindows, setShowWindows] = React.useState(false);
     const [actions, setActions] = React.useState<Action[]>([]);
@@ -23,17 +22,17 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
     const [icon, setIcon] = React.useState<JSX.Element | undefined>();
 
     React.useEffect(() => {
-        const conditional = [];
+        const conditionalActions: Action[] = [];
         if (application.isRunning) {
-            conditional.push({
-                icon: <Icon icon={'InputIcon'} />,
+            conditionalActions.push({
+                icon: 'InputIcon',
                 action: launchDevTools(application.uuid),
                 tooltip: 'Launch Developer Tools',
             });
         }
         setActions([
             {
-                icon: <Icon icon={'ReaderIcon'} />,
+                icon: 'ReaderIcon',
                 action: async () => {
                     const app = await fin.Application.wrap({ uuid: application.uuid || '' });
                     try {
@@ -46,20 +45,20 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
                             })
                         );
                     } catch (e) {
-                        /* do nothing */
+                        console.error(`Could not get the manifest data for application ${application.uuid} (${e})`);
                     }
                 },
                 tooltip: 'Show Manifest',
             },
-            ...conditional,
+            ...conditionalActions,
             {
-                icon: <Icon icon={'ExitIcon'} />,
+                icon: 'ExitIcon',
                 action: async () => {
                     const app = await fin.Application.wrap({ uuid: application.uuid || '' });
                     try {
                         app.quit();
                     } catch (e) {
-                        /* do nothing */
+                        console.error(`Could not close application with ${application.uuid} (${e})`);
                     }
                 },
                 tooltip: 'Quit Application',
@@ -72,30 +71,39 @@ export const ApplicationListItem: React.FC<Props> = (props: Props) => {
             ['URL', application.url],
         ]);
 
-        setIcon(<AppLogo src={application.icon} size="xlarge" alt={application.displayName} />);
+        setIcon(<EntityLogo src={application.icon} size="xlarge" alt={application.displayName} />);
     }, [application]);
+
+    const warningPill: Pill | undefined = !application.isRunning
+        ? {
+              icon: 'MoonIcon',
+              text: '',
+              tooltip: 'This application is not running.',
+          }
+        : undefined;
+
+    const typePill: Pill = application.isPlatform
+        ? { text: 'platform', icon: 'LayersIcon' }
+        : { text: 'application', icon: 'DashboardIcon' };
 
     return (
         <>
             <ListItem
                 name={application.displayName}
-                graph={<Pulse uuid={application.uuid} />}
                 icon={icon}
                 cpuUsage={application.cpuUsage}
                 memUsage={application.memUsage}
                 pid={application.pid}
-                warning={!application.isRunning ? { icon: <Icon icon={'MoonIcon'} />, text: '' } : undefined}
+                warning={warningPill}
                 runtime={application.runtime}
-                typePill={
-                    application.isPlatform
-                        ? { text: 'platform', icon: <Icon icon={'LayersIcon'} size={'small'} /> }
-                        : { text: 'application', icon: <Icon icon={'DashboardIcon'} size={'small'} /> }
-                }
+                typePill={typePill}
                 details={details}
                 expanded={showWindows}
                 onExpand={application.windows.length > 0 ? () => setShowWindows(!showWindows) : undefined}
                 actions={actions}
-            />
+            >
+                <Pulse uuid={application.uuid} />
+            </ListItem>
             {showWindows &&
                 application.windows.map((window) => (
                     <WindowListItem window={window} icon={icon} key={`window-${window.uuid}-${window.name}`} />

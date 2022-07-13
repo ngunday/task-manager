@@ -22,6 +22,8 @@ export const ManifestViewer: React.FC<Props> = (props) => {
 const Container = styled(Box)`
     display: flex;
     flex-direction: column;
+    background-color: ${({ theme }) => theme.palette.background1};
+    border-radius: ${({ theme }) => theme.px.small};
 `;
 const Body = styled(Box)`
     display: flex;

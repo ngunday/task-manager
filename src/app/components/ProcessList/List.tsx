@@ -7,9 +7,7 @@ interface Props {
     applications: Application[];
 }
 
-export const List: React.FC<Props> = (props: Props) => {
-    const { applications } = props;
-
+export const List: React.FC<Props> = ({ applications }) => {
     return (
         <>
             <ListHeader />

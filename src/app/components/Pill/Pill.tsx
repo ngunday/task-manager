@@ -1,28 +1,23 @@
-import { Box } from '@openfin/ui-library';
+import { Box, Icon } from '@openfin/ui-library';
 import React from 'react';
 import styled from 'styled-components';
 import { Pill as PillData } from '../../model/UI';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & PillData;
 
-export const Pill: React.FC<Props> = (props: Props) => {
-    const { icon, text } = props;
-
+export const Pill: React.FC<Props> = ({ icon, text, tooltip, ...rest }) => {
     return (
-        <Container {...props}>
-            <Icon>{icon}</Icon>
-            {text}
+        <Container title={tooltip} {...rest}>
+            <Icon icon={icon} size={'small'} />
+            <PillText>{text}</PillText>
         </Container>
     );
 };
 
-const Icon = styled(Box)`
+const PillText = styled(Box)`
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: ${({ theme }) => theme.px.xsmall};
-    width: ${({ theme }) => theme.px.large};
+    padding-left: ${({ theme }) => theme.px.xsmall};
+    padding-top: 2px;
 `;
 const Container = styled(Box)`
     font-size: ${({ theme }) => theme.fontSize.small};
@@ -31,8 +26,8 @@ const Container = styled(Box)`
     height: ${({ theme }) => theme.px.xxlarge};
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin: ${({ theme }) => `0 ${theme.px.base} 0 0`};
     overflow-x: hidden;
-    justify-content: flex-start;
     min-width: ${({ theme }) => theme.px.base};
 `;

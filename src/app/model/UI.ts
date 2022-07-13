@@ -1,6 +1,9 @@
+import { IconType } from '@openfin/ui-library';
+
 export interface Pill {
     text: string;
-    icon: JSX.Element;
+    icon: IconType;
+    tooltip?: string;
 }
 
 export enum LoadState {
@@ -30,7 +33,7 @@ export interface SortMode {
 }
 
 export interface Action {
-    icon: JSX.Element;
+    icon: IconType;
     action: () => void;
     tooltip?: string;
     active?: boolean;

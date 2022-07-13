@@ -12,8 +12,7 @@ interface Props {
     tooltip?: boolean;
 }
 
-export const AppLogo: React.FC<Props> = (props: Props) => {
-    const { src, alt, tooltip, size } = props;
+export const EntityLogo: React.FC<Props> = ({ src, alt, tooltip, size }) => {
     const imageState = useLoaded(src);
     const initials = alt?.substr(0, 1);
     const hasImg = !!src;

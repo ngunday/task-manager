@@ -8,8 +8,7 @@ interface Props {
     title?: string;
 }
 
-export const Header: React.FC<Props> = (props: Props) => {
-    const { title } = props;
+export const Header: React.FC<Props> = ({ title }) => {
     const [window, setWindow] = React.useState<_Window | undefined>(undefined);
 
     React.useEffect(() => {

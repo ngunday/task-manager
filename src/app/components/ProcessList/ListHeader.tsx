@@ -10,6 +10,14 @@ import { Box, Icon } from '@openfin/ui-library';
 export const ListHeader: React.FC = () => {
     const dispatch = useDispatch();
 
+    const handleCPUSort = () => {
+        dispatch(setSortMode(SortField.Cpu));
+    };
+
+    const handleMemorySort = () => {
+        dispatch(setSortMode(SortField.Memory));
+    };
+
     return (
         <Container>
             <RightBar>
@@ -17,12 +25,12 @@ export const ListHeader: React.FC = () => {
                     <Icon icon={'GearIcon'} />
                     <CellText> Runtime </CellText>
                 </Cell>
-                <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.Cpu))}>
+                <CompactCell clickable={true} onClick={handleCPUSort}>
                     <SortIcon field={SortField.Cpu} />
                     <Icon icon={'LapTimerIcon'} />
                     <CellText> CPU </CellText>
                 </CompactCell>
-                <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.Memory))}>
+                <Cell clickable={true} onClick={handleMemorySort}>
                     <SortIcon field={SortField.Memory} />
                     <Icon icon={'StackIcon'} />
                     <CellText> Memory </CellText>

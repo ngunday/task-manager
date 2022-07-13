@@ -9,7 +9,7 @@ export const launchDevTools = (uuid: string, name?: string) => {
             }
             await fin.System.showDeveloperTools(id);
         } catch (e) {
-            // fail quietly.
+            console.error(`Could not start devtools for ${uuid} (${e})`);
         }
     };
 };

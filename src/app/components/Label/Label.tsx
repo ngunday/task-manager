@@ -6,8 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
 }
 
-export const Label: React.FC<Props> = (props: Props) => {
-    const { text, children, ...rest } = props;
+export const Label: React.FC<Props> = ({ text, children, ...rest }) => {
     return (
         <Container {...rest}>
             {children}

@@ -34,7 +34,7 @@ export const Launch: React.FC = () => {
                     });
                 }
             } catch (e) {
-                /* do nothing */
+                console.error(`Could not start application at ${url} (${e})`);
             } finally {
                 dispatch(dismissModal());
             }
@@ -58,17 +58,15 @@ export const Launch: React.FC = () => {
                         tooltip={'Launch application from manifest'}
                         active={launchFromManifest}
                         large
-                    >
-                        <Icon icon={'FileTextIcon'} />
-                    </IconButton>
+                        icon={'FileTextIcon'}
+                    />
                     <IconButton
                         action={() => setLaunchFromManifest(false)}
                         tooltip={'Launch application from site url'}
                         active={!launchFromManifest}
+                        icon={'Link1Icon'}
                         large
-                    >
-                        <Icon icon={'Link1Icon'} />
-                    </IconButton>
+                    />
                 </Switch>
             </Body>
             <Buttons>

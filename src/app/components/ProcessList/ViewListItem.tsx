@@ -1,6 +1,6 @@
 import React from 'react';
 import { Entity } from '../../model/Shapes';
-import { Action } from '../../model/UI';
+import { Action, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { Icon } from '@openfin/ui-library';
@@ -10,27 +10,26 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const ViewListItem: React.FC<Props> = (props: Props) => {
-    const { view, icon } = props;
+export const ViewListItem: React.FC<Props> = ({ view, icon }) => {
     const [actions, setActions] = React.useState<Action[]>([]);
     const [details, setDetails] = React.useState<[string, string][]>([]);
 
     React.useEffect(() => {
         setActions([
             {
-                icon: <Icon icon={'InputIcon'} />,
+                icon: 'InputIcon',
                 action: launchDevTools(view.uuid, view.name),
                 tooltip: 'Launch Developer Tools',
             },
             {
-                icon: <Icon icon={'ExitIcon'} />,
+                icon: 'ExitIcon',
                 tooltip: 'Destroy View',
                 action: async () => {
                     const v = await fin.View.wrap({ uuid: view.uuid || '', name: view.name || '' });
                     try {
                         v.destroy();
                     } catch (e) {
-                        /* do nothing */
+                        console.error(`Could not destroy view ${view.uuid}:${view.name} (${e})`);
                     }
                 },
             },
@@ -46,10 +45,12 @@ export const ViewListItem: React.FC<Props> = (props: Props) => {
         ]);
     }, [view]);
 
+    const typePill: Pill = { text: 'View', icon: 'GroupIcon' };
+
     return (
         <ListItem
             name={view.displayName}
-            typePill={{ text: 'View', icon: <Icon icon={'GroupIcon'} size={'small'} /> }}
+            typePill={typePill}
             actions={actions}
             pid={view.pid}
             icon={icon}

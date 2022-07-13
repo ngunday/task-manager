@@ -8,8 +8,7 @@ interface Props {
     field: SortField;
 }
 
-export const SortIcon: React.FC<Props> = (props: Props) => {
-    const { field } = props;
+export const SortIcon: React.FC<Props> = ({ field }) => {
     const sortMode = useSelector(selectSortMode);
 
     if (sortMode.field === field) {

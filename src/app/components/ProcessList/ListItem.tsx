@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { formatMemory } from '../../utils/formatMemory';
 import { Action, Pill as PillData } from '../../model/UI';
@@ -15,7 +15,6 @@ interface Props {
     runtime?: string;
     expanded?: boolean;
     indentation?: number;
-    graph?: JSX.Element;
     onExpand?: () => void;
     typePill?: PillData;
     warning?: PillData;
@@ -23,24 +22,22 @@ interface Props {
     details: [string, string][];
 }
 
-export const ListItem: React.FC<Props> = (props: Props) => {
-    const {
-        name,
-        icon,
-        cpuUsage,
-        memUsage,
-        runtime,
-        pid,
-        indentation = 0,
-        expanded = false,
-        graph,
-        onExpand,
-        typePill,
-        warning,
-        details,
-        actions,
-    } = props;
-
+export const ListItem: React.FC<PropsWithChildren<Props>> = ({
+    name,
+    icon,
+    cpuUsage,
+    memUsage,
+    runtime,
+    pid,
+    indentation = 0,
+    expanded = false,
+    onExpand,
+    typePill,
+    warning,
+    details,
+    actions,
+    children,
+}) => {
     const [showDetails, setShowDetails] = React.useState(false);
     const [detailsMap, setDetailsMap] = React.useState<Map<string, string> | undefined>();
     const [actionList, setActionList] = React.useState<Action[]>([]);
@@ -55,7 +52,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
         setActionList([
             {
                 active: showDetails,
-                icon: <Icon icon={'MagnifyingGlassIcon'} />,
+                icon: 'MagnifyingGlassIcon',
                 action: () => setShowDetails(!showDetails),
                 tooltip: showDetails ? 'Hide Details' : 'Show Details',
             },
@@ -74,15 +71,17 @@ export const ListItem: React.FC<Props> = (props: Props) => {
             <Info indentation={indentation}>
                 <Chevron>
                     {onExpand && (
-                        <IconButton action={onExpand} transparent>
-                            <Icon icon={expanded ? 'TriangleDownIcon' : 'TriangleRightIcon'} />
-                        </IconButton>
+                        <IconButton
+                            action={onExpand}
+                            transparent
+                            icon={expanded ? 'TriangleDownIcon' : 'TriangleRightIcon'}
+                        />
                     )}
                 </Chevron>
                 {icon}
                 <Name>{name}</Name>
                 {typePill && <TypePill {...typePill} />}
-                {warning && <WarningPill {...warning} />}
+                {warning && <WarningPill {...warning} title={warning.tooltip} />}
                 <RightBar>
                     <Actions>
                         {actionList.map((action, index) => (
@@ -91,9 +90,8 @@ export const ListItem: React.FC<Props> = (props: Props) => {
                                 active={action.active}
                                 action={action.action}
                                 key={`${name}-${action.active ? '' : 'in'}active-action-${index}`}
-                            >
-                                {action.icon}
-                            </IconButton>
+                                icon={action.icon}
+                            />
                         ))}
                     </Actions>
                     {runtime !== undefined && <Cell> {runtime} </Cell>}
@@ -109,7 +107,7 @@ export const ListItem: React.FC<Props> = (props: Props) => {
                             <Details definitions={detailsMap} indentation={indentation} />
                         </DetailsListContainer>
                     )}
-                    {graph && <GraphContainer>{graph}</GraphContainer>}
+                    <Content>{children}</Content>
                 </DetailsContainer>
             )}
         </Container>
@@ -159,7 +157,7 @@ const DetailsContainer = styled(Box)`
     display: flex;
     flex-direction: row;
 `;
-const GraphContainer = styled(Box)`
+const Content = styled(Box)`
     margin: ${({ theme }) => theme.px.small};
     display: flex;
     justify-content: flex-end;

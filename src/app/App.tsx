@@ -116,4 +116,7 @@ const GlobalStyle = createGlobalStyle`
   &, * {
     ${Mixins.scrollbar.base}
   }
+  path {
+    color: ${({ theme }) => theme.palette.textDefault}
+  }
 `;
