@@ -1,1 +1,1 @@
-OpenFin Task Manager
+OpenFin Process Manager

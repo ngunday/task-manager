@@ -2,27 +2,27 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Modal } from '../../model/UI';
 
 export interface ModalRootState {
-  modal: { value?: Modal };
+    modal: { value?: Modal };
 }
 
 export interface ModalAction {
-  payload: Modal;
-  type: string;
+    payload: Modal;
+    type: string;
 }
 
 export const modalSlice = createSlice({
-  name: 'modal',
-  initialState: {
-    value: undefined,
-  },
-  reducers: {
-    showModal: (state: ModalRootState['modal'], action: ModalAction) => {
-      state.value = action.payload;
+    name: 'modal',
+    initialState: {
+        value: undefined,
     },
-    dismissModal: (state: ModalRootState['modal']) => {
-      state.value = undefined;
+    reducers: {
+        showModal: (state: ModalRootState['modal'], action: ModalAction) => {
+            state.value = action.payload;
+        },
+        dismissModal: (state: ModalRootState['modal']) => {
+            state.value = undefined;
+        },
     },
-  },
 });
 
 export const { showModal, dismissModal } = modalSlice.actions;

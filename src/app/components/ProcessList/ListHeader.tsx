@@ -8,61 +8,61 @@ import { SortIcon } from '../SortIcon/SortIcon';
 import { Z_INDEX_HEADER } from '../../constants';
 
 export const ListHeader: React.FC = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  return (
-    <Container>
-      <RightBar>
-        <Cell>
-          <GearIcon />
-          <CellText> Runtime </CellText>
-        </Cell>
-        <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.Cpu))}>
-          <SortIcon field={SortField.Cpu} />
-          <LapTimerIcon />
-          <CellText> CPU </CellText>
-        </CompactCell>
-        <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.Memory))}>
-          <SortIcon field={SortField.Memory} />
-          <StackIcon />
-          <CellText> Memory </CellText>
-        </Cell>
-        <CompactCell>
-          <IdCardIcon />
-          <CellText> PID </CellText>
-        </CompactCell>
-      </RightBar>
-    </Container>
-  );
+    return (
+        <Container>
+            <RightBar>
+                <Cell>
+                    <GearIcon />
+                    <CellText> Runtime </CellText>
+                </Cell>
+                <CompactCell clickable={true} onClick={() => dispatch(setSortMode(SortField.Cpu))}>
+                    <SortIcon field={SortField.Cpu} />
+                    <LapTimerIcon />
+                    <CellText> CPU </CellText>
+                </CompactCell>
+                <Cell clickable={true} onClick={() => dispatch(setSortMode(SortField.Memory))}>
+                    <SortIcon field={SortField.Memory} />
+                    <StackIcon />
+                    <CellText> Memory </CellText>
+                </Cell>
+                <CompactCell>
+                    <IdCardIcon />
+                    <CellText> PID </CellText>
+                </CompactCell>
+            </RightBar>
+        </Container>
+    );
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: ${({ theme }) => `${theme.px.base} ${theme.px.base} ${theme.px.xsmall} ${theme.px.base}`};
-  align-items: center;
-  top: 0;
-  position: sticky;
-  backdrop-filter: blur(15px);
-  z-index: ${Z_INDEX_HEADER};
+    display: flex;
+    flex-direction: row;
+    padding: ${({ theme }) => `${theme.px.base} ${theme.px.base} ${theme.px.xsmall} ${theme.px.base}`};
+    align-items: center;
+    top: 0;
+    position: sticky;
+    backdrop-filter: blur(15px);
+    z-index: ${Z_INDEX_HEADER};
 `;
 const RightBar = styled.div`
-  padding-right: ${({ theme }) => theme.px.small};
-  margin-left: auto;
-  display: flex;
-  flex-direction: row;
+    padding-right: ${({ theme }) => theme.px.small};
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
 `;
 const Cell = styled.div<{ clickable?: boolean }>`
-  width: 85px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: right;
-  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
+    width: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 `;
 const CompactCell = styled(Cell)`
-  width: 65px;
+    width: 65px;
 `;
 const CellText = styled.span`
-  padding-left: ${({ theme }) => theme.px.xsmall};
+    padding-left: ${({ theme }) => theme.px.xsmall};
 `;

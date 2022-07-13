@@ -5,12 +5,12 @@ import sortingReducer from './slices/sorting';
 import modalReducer from './slices/modal';
 
 const store = configureStore({
-  reducer: {
-    applications: applicationsReducer,
-    pulse: pulseReducer,
-    sorting: sortingReducer,
-    modal: modalReducer,
-  },
+    reducer: {
+        applications: applicationsReducer,
+        pulse: pulseReducer,
+        sorting: sortingReducer,
+        modal: modalReducer,
+    },
 });
 
 //@ts-ignore

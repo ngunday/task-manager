@@ -4,18 +4,18 @@ import { ApplicationListItem } from './ApplicationListItem';
 import { ListHeader } from './ListHeader';
 
 interface Props {
-  applications: Application[];
+    applications: Application[];
 }
 
 export const List: React.FC<Props> = (props: Props) => {
-  const { applications } = props;
+    const { applications } = props;
 
-  return (
-    <>
-      <ListHeader />
-      {applications.map((application) => (
-        <ApplicationListItem key={`p-${application.uuid}`} application={application} />
-      ))}
-    </>
-  );
+    return (
+        <>
+            <ListHeader />
+            {applications.map((application) => (
+                <ApplicationListItem key={`p-${application.uuid}`} application={application} />
+            ))}
+        </>
+    );
 };
