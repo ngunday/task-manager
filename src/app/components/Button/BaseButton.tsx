@@ -45,7 +45,6 @@ const Container = styled.button<{ selected: boolean; transparent: boolean; large
     background-size: 12px;
     border: 0;
     margin: 0;
-    padding: 0;
 
     height: ${({ theme, large }) => (large ? theme.px.xxxlarge : theme.px.xxlarge)};
     min-width: ${({ theme, large }) => (large ? theme.px.xxxlarge : theme.px.xxlarge)};
