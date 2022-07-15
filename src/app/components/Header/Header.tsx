@@ -1,21 +1,16 @@
-import { FC, useState, useEffect } from 'react';
-import { Box, Icon } from '@openfin/ui-library';
+import { FC, PropsWithChildren, useContext } from 'react';
+import { Box, Icon, IconType } from '@openfin/ui-library';
 import styled from 'styled-components';
-import { _Window } from 'openfin/_v2/api/window/window';
 import { HeaderButton } from '../Button/HeaderButton';
+import { WindowContext } from '../../utils/window';
 
 interface Props {
     title?: string;
+    icon?: IconType;
 }
 
-export const Header: FC<Props> = ({ title }) => {
-    const [window, setWindow] = useState<_Window | undefined>(undefined);
-
-    useEffect(() => {
-        if (typeof fin !== 'undefined') {
-            setWindow(fin.Window.getCurrentSync());
-        }
-    }, []);
+export const Header: FC<PropsWithChildren<Props>> = ({ title, icon, children }) => {
+    const window = useContext(WindowContext);
 
     const handleMinMax = async () => {
         if (window) {
@@ -31,20 +26,21 @@ export const Header: FC<Props> = ({ title }) => {
     return (
         <Container>
             <Heading>
-                <OpenFinLogo icon={'OpenFinIcon'} size={'base'} />
+                <Logo icon={icon ? icon : 'OpenFinIcon'} size={'base'} />
                 {title}
             </Heading>
-            <Buttons>
-                <MinimizeButton onClick={() => window?.minimize()}>
+            <Content>
+                {children}
+                <MinimizeButton title="Minimize" onClick={() => window?.minimize()}>
                     <Icon icon={'MinusIcon'} />
                 </MinimizeButton>
-                <HeaderButton onClick={handleMinMax}>
+                <HeaderButton title="Maximize/Restore" onClick={handleMinMax}>
                     <Icon icon={'SizeIcon'} />
                 </HeaderButton>
-                <HeaderButton onClick={() => window?.close()}>
+                <HeaderButton title="Close" onClick={() => window?.close()}>
                     <Icon icon={'Cross2Icon'} />
                 </HeaderButton>
-            </Buttons>
+            </Content>
         </Container>
     );
 };
@@ -52,9 +48,8 @@ export const Header: FC<Props> = ({ title }) => {
 const Container = styled(Box)`
     display: flex;
     align-items: center;
-    height: ${({ theme }) => theme.px.xxxxlarge};
+    height: ${({ theme }) => `${theme.unit.xxxlarge + theme.unit.small}px`};
     margin: 0 ${({ theme }) => theme.px.xsmall};
-    border-bottom: 1px solid ${({ theme }) => theme.palette.background4};
     user-select: none;
     -webkit-app-region: drag;
 `;
@@ -63,14 +58,13 @@ const Heading = styled.h4`
     align-items: center;
     line-height: ${({ theme }) => theme.lineHeight.ui};
 `;
-const OpenFinLogo = styled(Icon)`
+const Logo = styled(Icon)`
     margin: ${({ theme }) => `0 ${theme.px.small} 0 ${theme.px.base}`};
 `;
-const Buttons = styled(Box)`
+const Content = styled(Box)`
     display: flex;
     margin-left: auto;
     margin-right: ${({ theme }) => theme.px.base};
-    gap: ${({ theme }) => theme.px.base};
     -webkit-app-region: none;
 `;
 const MinimizeButton = styled(HeaderButton)`

@@ -1,11 +1,12 @@
-import { FC, HTMLAttributes } from 'react';
+import { Box, BoxProps } from '@openfin/ui-library';
+import { FC } from 'react';
 import styled from 'styled-components';
 
-export const HeaderButton: FC<HTMLAttributes<HTMLButtonElement>> = ({ children, ...rest }) => {
+export const HeaderButton: FC<BoxProps> = ({ children, ...rest }) => {
     return <Container {...rest}>{children}</Container>;
 };
 
-const Container = styled.button`
+const Container = styled(Box)`
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
@@ -14,11 +15,14 @@ const Container = styled.button`
     margin: 0;
     padding: 0;
 
+    min-width: ${({ theme }) => theme.px.xxlarge};
+    height: ${({ theme }) => theme.px.xxlarge};
+
     padding: ${({ theme }) => theme.px.xsmall};
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    border-radius: ${({ theme }) => theme.px.xsmall};
     cursor: pointer;
     &:hover {
         background-color: ${({ theme }) => theme.palette.background4};

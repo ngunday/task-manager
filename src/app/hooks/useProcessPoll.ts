@@ -1,8 +1,7 @@
-import { ApplicationOption } from 'openfin/_v2/api/application/applicationOption';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Application, Process, Pulse } from '../model/Shapes';
-import { OFManifest, OFApplication, OFApplicationInfo, OFViewCreationOptions } from '../model/OFShim';
+import { EntityProcessDetailsExtended } from '../model/OFShim';
 import { SortField, SortOrder } from '../model/UI';
 import { selectApplications, setApplications } from '../store/slices/applications';
 import { submitPulse } from '../store/slices/pulse';
@@ -19,24 +18,28 @@ export const useProcessPoll = (): Application[] => {
         const interval = setInterval(async () => {
             const applicationsInfo = (await fin.System.getAllApplications()).filter((app) => app.uuid);
             const processMap = applicationsInfo.map(async (info) => {
-                const appInfo = info as OFApplicationInfo; //uuid, isPlatform, isRunning
-                const app = fin.Application.wrapSync({ uuid: appInfo.uuid }) as OFApplication;
+                const appInfo = info as OpenFin.ApplicationState; //uuid, isPlatform, isRunning
+                const app = fin.Application.wrapSync({ uuid: appInfo.uuid });
 
                 /* Try to get a User Facing Icon and Name */
                 const appDetails = await app.getInfo(); //name, icon, runtime
-                let { name, icon } = appDetails.initialOptions as ApplicationOption;
+                let { name, icon } = appDetails.initialOptions as OpenFin.ApplicationOptions;
                 let url;
                 if (appDetails.manifest) {
-                    const { shortcut, startup_app: startupApp, platform } = appDetails.manifest as OFManifest;
+                    const { shortcut, startup_app: startupApp, platform } = appDetails.manifest as OpenFin.Manifest;
                     name = shortcut?.name || startupApp?.name || startupApp?.uuid;
-                    icon = shortcut?.icon || startupApp?.icon || platform?.applicationIcon;
+                    icon = shortcut?.icon || startupApp?.icon || platform?.icon;
                     url = startupApp?.url;
                 }
 
                 const processInfo = await app.getProcessInfo(); //entities
 
-                const windowEntities = processInfo.entities.filter((entity) => entity.entityType === 'window');
-                const viewEntities = processInfo.entities.filter((entity) => entity.entityType === 'view');
+                const windowEntities: EntityProcessDetailsExtended[] = processInfo.entities.filter(
+                    (entity) => entity.entityType === 'window'
+                );
+                const viewEntities: EntityProcessDetailsExtended[] = processInfo.entities.filter(
+                    (entity) => entity.entityType === 'view'
+                );
                 viewEntities.forEach(async (entity) => {
                     const parentWindow = await fin.View.wrapSync({
                         uuid: entity.uuid || '',
@@ -60,13 +63,13 @@ export const useProcessPoll = (): Application[] => {
                                 .map(async (view) => {
                                     const v = fin.View.wrapSync({ uuid: view.uuid || '', name: view.name || '' });
                                     const viewInfo = await v.getInfo();
-                                    const viewOptions: OFViewCreationOptions = await v.getOptions();
+                                    const viewOptions: OpenFin.ViewOptions = await v.getOptions();
                                     return {
                                         uuid: view.uuid,
                                         name: view.name,
                                         pid: view.pid,
                                         bounds: await v.getBounds(),
-                                        displayName: viewOptions.title || view.name,
+                                        displayName: viewInfo.title || viewOptions.name || view.name,
                                         url: viewInfo.url,
                                     };
                                 });

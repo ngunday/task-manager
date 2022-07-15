@@ -57,6 +57,11 @@ module.exports = (env, options) => {
         favicon: path.resolve(__dirname, 'res/favicon.ico'),
         template: path.resolve(__dirname, 'res/index.html'),
       }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {from: path.resolve(__dirname, 'res/viewer.html'),}
+        ],
+      }),
     ],
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.json'],

@@ -1,21 +1,19 @@
 import { FC, useState, useEffect } from 'react';
 import { Application } from '../../model/Shapes';
-import { Action, Modals } from '../../model/UI';
+import { Action } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
 import { EntityLogo } from '../AppLogo/EntityLogo';
 import { Pulse } from '../Graph/Pulse';
 import { Pill } from '../../model/UI';
-import { showModal } from '../../store/slices/modal';
-import { useDispatch } from 'react-redux';
+import { launchReader } from '../../utils/launchReader';
 
 interface Props {
     application: Application;
 }
 
 export const ApplicationListItem: FC<Props> = ({ application }) => {
-    const dispatch = useDispatch();
     const [showWindows, setShowWindows] = useState(false);
     const [actions, setActions] = useState<Action[]>([]);
     const [details, setDetails] = useState<[string, string][]>([]);
@@ -37,13 +35,8 @@ export const ApplicationListItem: FC<Props> = ({ application }) => {
                     const app = await fin.Application.wrap({ uuid: application.uuid || '' });
                     try {
                         const manifest = await app.getManifest();
-                        dispatch(
-                            showModal({
-                                type: Modals.ManifestViewer,
-                                title: `${application.displayName} Manifest`,
-                                payload: manifest,
-                            })
-                        );
+                        const manifestString = JSON.stringify(manifest, undefined, 2);
+                        launchReader(`${application.displayName} Manifest`, manifestString, 'ReaderIcon');
                     } catch (e) {
                         console.error(`Could not get the manifest data for application ${application.uuid} (${e})`);
                     }

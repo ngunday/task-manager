@@ -7,7 +7,6 @@ import { Modals, Modal as ModalData } from '../../model/UI';
 import { dismissModal } from '../../store/slices/modal';
 import { Launch } from './Launch/Launch';
 import { Box, Icon } from '@openfin/ui-library';
-import { ManifestViewer } from './ManifestViewer/ManifestViewer';
 
 interface Props {
     modal: ModalData;
@@ -20,8 +19,6 @@ export const Modal: FC<Props> = ({ modal }) => {
         switch (modal.type) {
             case Modals.Launch:
                 return <Launch />;
-            case Modals.ManifestViewer:
-                return <ManifestViewer manifest={modal.payload} />;
         }
     };
 
@@ -81,8 +78,7 @@ const ModalWindow = styled(Box)`
 const Header = styled(Box)`
     display: flex;
     align-items: center;
-    padding: ${({ theme }) => theme.px.base};
-    padding-bottom: ${({ theme }) => theme.px.base};
+    padding: ${({ theme }) => theme.px.small};
     border-bottom: 1px solid ${({ theme }) => theme.palette.background4};
 `;
 const Body = styled(Box)`

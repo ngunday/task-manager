@@ -1,11 +1,9 @@
-import { Bounds } from 'openfin/_v2/shapes/shapes';
-
 export interface Entity {
     uuid: string;
     name: string;
     pid: number;
     url: string;
-    bounds: Bounds;
+    bounds: OpenFin.Bounds;
     displayName: string;
 }
 

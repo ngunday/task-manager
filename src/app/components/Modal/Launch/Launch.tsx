@@ -24,6 +24,7 @@ export const Launch: FC = () => {
                         name,
                         url,
                         mainWindowOptions: {
+                            name: name,
                             defaultHeight: 500,
                             defaultWidth: 420,
                             defaultTop: 120,

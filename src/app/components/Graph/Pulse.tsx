@@ -15,7 +15,7 @@ export const Pulse: FC<Props> = ({ uuid }) => {
 
     return (
         <Container>
-            <Label text={'Performance'}>
+            <Label text={'Performance (CPU)'}>
                 <Icon icon={'TimerIcon'} />
             </Label>
             <GraphContainer>

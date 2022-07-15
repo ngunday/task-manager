@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { ThemeProvider, Mixins, Typography, Icon, Box } from '@openfin/ui-library';
+import styled from 'styled-components';
+import { ThemeProvider, Mixins, Icon, Box } from '@openfin/ui-library';
 import { Header } from './components/Header/Header';
 import { ActionMenu } from './components/Menu/ActionMenu';
 import { Label } from './components/Label/Label';
@@ -9,6 +9,8 @@ import { useProcessPoll } from './hooks/useProcessPoll';
 import { Modal } from './components/Modal/Modal';
 import { selectModal } from './store/slices/modal';
 import { useSelector } from 'react-redux';
+import { GlobalStyle } from './utils/globalStyle';
+import { HeaderButton } from './components/Button/HeaderButton';
 
 export const App: FC = () => {
     const [version, setVersion] = useState('0.0.0.0');
@@ -25,14 +27,16 @@ export const App: FC = () => {
         <ThemeProvider scheme="dark">
             <GlobalStyle />
             <Container>
-                <Header title={'OpenFin Process Manager'} />
-                <Body>
-                    <TopBar>
+                <Header title={'OpenFin Process Manager'}>
+                    <VersionLabel text={`RVM Version: ${version}`}>
+                        <Icon icon={'CubeIcon'} />
+                    </VersionLabel>
+                    <Separator />
+                    <HeaderButton>
                         <ActionMenu />
-                        <VersionLabel text={`RVM Version: ${version}`}>
-                            <Icon icon={'CubeIcon'} />
-                        </VersionLabel>
-                    </TopBar>
+                    </HeaderButton>
+                </Header>
+                <Body>
                     <Content>
                         <ListContainer>
                             <List applications={processPoll} />
@@ -66,11 +70,13 @@ const Container = styled(Box)`
         ${Mixins.scrollbar.base}
     }
 `;
-const TopBar = styled(Box)`
-    display: flex;
-    margin: ${({ theme }) => `0 ${theme.px.base} ${theme.px.small} ${theme.px.base}`};
+const Separator = styled(Box)`
+    border-right: 1px ${({ theme }) => theme.palette.background4} solid;
+    height: ${({ theme }) => theme.px.xxlarge};
+    margin: ${({ theme }) => `0 ${theme.px.xsmall} 0 ${theme.px.large}`};
 `;
 const VersionLabel = styled(Label)`
+    -webkit-app-region: drag;
     margin-left: auto;
 `;
 const Content = styled(Box)`
@@ -94,29 +100,6 @@ const ListContainer = styled(Box)`
 const Body = styled(Box)`
     display: flex;
     flex-direction: column;
-    height: ${({ theme }) => `calc(100% - ${theme.px.xxxxlarge})`};
-    padding: ${({ theme }) => `${theme.px.base}`};
-`;
-const GlobalStyle = createGlobalStyle`
-  body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    font: ${Typography.base};
-    color: ${({ theme }) => theme.palette.textDefault};
-    background-color: ${({ theme }) => theme.palette.background2};
-    caret-color: ${({ theme }) => theme.palette.textDefault};
-    user-select: none;
-  }
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  &, * {
-    ${Mixins.scrollbar.base}
-  }
-  path {
-    color: ${({ theme }) => theme.palette.textDefault}
-  }
+    height: ${({ theme }) => `calc(100% - ${theme.px.xxxlarge} - ${theme.px.small})`};
+    margin: ${({ theme }) => `0 ${theme.px.small} ${theme.px.small} ${theme.px.small}`};
 `;

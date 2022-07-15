@@ -18,16 +18,18 @@
     "start": "yarn build:clean && yarn serve:dev"
   },
   "dependencies": {
+    "@openfin/core": "^26.70.16",
+    "@openfin/ui-library": "^0.3.1",
     "@fontsource/inter": "^4.2.2",
     "@modulz/radix-icons": "^4.0.0",
     "@reduxjs/toolkit": "^1.6.2",
+    "@types/uuid": "^8.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.8"
+    "react-redux": "^7.2.8",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@openfin/ui-library": "^0.3.1",
-    "@types/openfin": "^51.0.1",
     "@types/react": "^17.0.47",
     "@types/react-dom": "^17.0.17",
     "@types/react-redux": "^7.1.24",

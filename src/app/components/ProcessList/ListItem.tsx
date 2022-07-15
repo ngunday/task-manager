@@ -80,10 +80,10 @@ export const ListItem: FC<PropsWithChildren<Props>> = ({
                 </Chevron>
                 {icon}
                 <Name>{name}</Name>
-                {typePill && <TypePill {...typePill} />}
+                {typePill && <TypePill {...typePill} showingDetails={showDetails} />}
                 {warning && <WarningPill {...warning} title={warning.tooltip} />}
                 <RightBar>
-                    <Actions>
+                    <Actions showingDetails={showDetails}>
                         {actionList.map((action, index) => (
                             <IconButton
                                 tooltip={action.tooltip}
@@ -113,18 +113,18 @@ export const ListItem: FC<PropsWithChildren<Props>> = ({
         </Container>
     );
 };
-const Actions = styled(Box)`
+const Actions = styled(Box)<{ showingDetails: boolean }>`
     display: flex;
     padding-left: ${({ theme }) => theme.px.xxxlarge};
     overflow-x: hidden;
     transition: opacity ${({ theme }) => theme.transition.base};
     gap: ${({ theme }) => theme.px.xsmall};
-    width: 0;
-    opacity: 0;
+    width: ${({ showingDetails }) => (showingDetails ? 'auto' : 0)};
+    opacity: ${({ showingDetails }) => (showingDetails ? 1 : 0)};
 `;
-const TypePill = styled(Pill)`
-    width: ${({ theme }) => theme.px.base};
-    min-width: ${({ theme }) => theme.px.base};
+const TypePill = styled(Pill)<{ showingDetails: boolean }>`
+    width: ${({ theme, showingDetails }) => (showingDetails ? '85px' : theme.px.base)};
+    min-width: ${({ theme, showingDetails }) => (showingDetails ? '85px' : theme.px.base)};
     transition: all ${({ theme }) => theme.transition.base};
     font-size: ${({ theme }) => theme.fontSize.small};
 `;
@@ -132,7 +132,7 @@ const WarningPill = styled(Pill)`
     padding: ${({ theme }) => `${theme.px.xsmall} ${theme.px.small}`};
     background-color: ${({ theme }) => theme.palette.statusCritical};
 `;
-const Container = styled.div<{ showingDetails: boolean }>`
+const Container = styled(Box)<{ showingDetails: boolean }>`
     display: flex;
     flex-direction: column;
     transition: background-color ${({ theme }) => theme.transition.base};
@@ -176,7 +176,7 @@ const Details = styled(DefinitionList)<{ indentation: number }>`
         }
     }
 `;
-const Info = styled.div<{ indentation: number }>`
+const Info = styled(Box)<{ indentation: number }>`
     display: flex;
     flex-direction: row;
     padding: ${({ theme }) => `${theme.px.base} 0`};
