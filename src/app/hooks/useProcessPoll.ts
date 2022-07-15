@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Application, Process, Pulse } from '../model/Shapes';
-import { EntityProcessDetailsExtended } from '../model/OFShim';
 import { SortField, SortOrder } from '../model/UI';
 import { selectApplications, setApplications } from '../store/slices/applications';
 import { submitPulse } from '../store/slices/pulse';
 import { selectSortMode } from '../store/slices/sorting';
+
+export interface EntityProcessDetailsExtended extends OpenFin.EntityProcessDetails {
+    parent?: OpenFin.Identity;
+}
 
 export const useProcessPoll = (): Application[] => {
     const [unsortedApps, setUnsortedApps] = useState<Application[]>([]);
