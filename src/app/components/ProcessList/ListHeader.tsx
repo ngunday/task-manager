@@ -47,7 +47,7 @@ export const ListHeader: FC = () => {
 const Container = styled(Box)`
     display: flex;
     flex-direction: row;
-    padding: ${({ theme }) => `${theme.px.base} ${theme.px.base} ${theme.px.xsmall} ${theme.px.base}`};
+    padding: ${({ theme }) => `${theme.px.base} ${theme.px.xsmall} ${theme.px.xsmall} ${theme.px.xsmall}`};
     align-items: center;
     top: 0;
     position: sticky;

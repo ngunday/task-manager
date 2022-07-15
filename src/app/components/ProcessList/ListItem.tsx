@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useEffect, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { formatMemory } from '../../utils/formatMemory';
-import { Action, Pill as PillData } from '../../model/UI';
+import { Action, ListPairs, Pill as PillData } from '../../model/UI';
 import { Pill } from '../Pill/Pill';
 import { IconButton } from '../Button/IconButton';
 import { Box, DefinitionList } from '@openfin/ui-library';
@@ -19,7 +19,7 @@ interface Props {
     typePill?: PillData;
     warning?: PillData;
     actions: Action[];
-    details: [string, string][];
+    details: ListPairs;
 }
 
 export const ListItem: FC<PropsWithChildren<Props>> = ({
@@ -140,7 +140,7 @@ const Container = styled(Box)<{ showingDetails: boolean }>`
     border-top: ${({ theme, showingDetails }) => (showingDetails ? `1px solid ${theme.palette.background5}` : 'none')};
     border-bottom: ${({ theme, showingDetails }) =>
         showingDetails ? `1px solid ${theme.palette.background5}` : 'none'};
-    padding: ${({ theme }) => `0 ${theme.px.base}`};
+    padding: ${({ theme }) => `0 ${theme.px.xsmall}`};
     &:hover {
         background-color: ${({ theme }) => theme.palette.background3};
     }

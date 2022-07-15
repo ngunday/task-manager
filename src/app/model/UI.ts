@@ -44,3 +44,5 @@ export interface Modal {
     title: string;
     payload?: unknown;
 }
+
+export type ListPairs = [string, string][];

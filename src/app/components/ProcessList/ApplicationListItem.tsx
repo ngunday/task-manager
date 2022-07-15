@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Application } from '../../model/Shapes';
-import { Action } from '../../model/UI';
+import { Action, ListPairs } from '../../model/UI';
 import { launchDevTools } from '../../utils/launchDevTools';
 import { ListItem } from './ListItem';
 import { WindowListItem } from './WindowListItem';
@@ -16,7 +16,7 @@ interface Props {
 export const ApplicationListItem: FC<Props> = ({ application }) => {
     const [showWindows, setShowWindows] = useState(false);
     const [actions, setActions] = useState<Action[]>([]);
-    const [details, setDetails] = useState<[string, string][]>([]);
+    const [details, setDetails] = useState<ListPairs>([]);
     const [icon, setIcon] = useState<JSX.Element | undefined>();
 
     useEffect(() => {
@@ -27,9 +27,7 @@ export const ApplicationListItem: FC<Props> = ({ application }) => {
                 action: launchDevTools(application.uuid),
                 tooltip: 'Launch Developer Tools',
             });
-        }
-        setActions([
-            {
+            conditionalActions.push({
                 icon: 'ReaderIcon',
                 action: async () => {
                     const app = await fin.Application.wrap({ uuid: application.uuid || '' });
@@ -42,7 +40,10 @@ export const ApplicationListItem: FC<Props> = ({ application }) => {
                     }
                 },
                 tooltip: 'Show Manifest',
-            },
+            });
+        }
+
+        setActions([
             ...conditionalActions,
             {
                 icon: 'ExitIcon',
@@ -62,6 +63,14 @@ export const ApplicationListItem: FC<Props> = ({ application }) => {
             ['UUID', application.uuid],
             ['Manifest', application.manifestUrl],
             ['URL', application.url],
+            /** Let the user know if the window is not running */
+            ...([
+                !application.isRunning
+                    ? ['Status', 'This application has no windows and currently is not running.']
+                    : [],
+            ] as ListPairs),
+            /** Map custom channels (that is not interop broker, etc.) */
+            ...(application.channels.map(({ name }, index) => [`IAB Channel ${index + 1}`, `${name}`]) as ListPairs),
         ]);
 
         setIcon(<EntityLogo src={application.icon} size="xlarge" alt={application.displayName} />);

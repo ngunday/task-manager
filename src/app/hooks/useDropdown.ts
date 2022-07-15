@@ -22,8 +22,12 @@ export const useDropdown = () => {
 
             setIsDropdownShowing(true);
             const window = fin.Window.getCurrentSync();
-            const menuResult = await window.showPopupMenu({ ...opts, x: left, y: bottom + 4 });
-            handleResult(menuResult);
+            try {
+                const menuResult = await window.showPopupMenu({ ...opts, x: left, y: bottom + 4 });
+                handleResult(menuResult);
+            } catch (e) {
+                console.log(`Could not create the popup menu. ${e}`);
+            }
         };
     };
 

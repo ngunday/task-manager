@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Window } from '../../model/Shapes';
-import { Action, Pill } from '../../model/UI';
+import { Action, ListPairs, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { ViewListItem } from './ViewListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
@@ -14,7 +14,7 @@ interface Props {
 export const WindowListItem: FC<Props> = ({ window, icon }) => {
     const [expanded, setExpanded] = useState(false);
     const [actions, setActions] = useState<Action[]>([]);
-    const [details, setDetails] = useState<[string, string][]>([]);
+    const [details, setDetails] = useState<ListPairs>([]);
 
     useEffect(() => {
         let conditionalActions: Action[] = [];

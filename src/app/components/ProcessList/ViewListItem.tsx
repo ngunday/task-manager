@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Entity } from '../../model/Shapes';
-import { Action, Pill } from '../../model/UI';
+import { Action, ListPairs, Pill } from '../../model/UI';
 import { ListItem } from './ListItem';
 import { launchDevTools } from '../../utils/launchDevTools';
 
@@ -11,7 +11,7 @@ interface Props {
 
 export const ViewListItem: FC<Props> = ({ view, icon }) => {
     const [actions, setActions] = useState<Action[]>([]);
-    const [details, setDetails] = useState<[string, string][]>([]);
+    const [details, setDetails] = useState<ListPairs>([]);
 
     useEffect(() => {
         setActions([
@@ -24,9 +24,9 @@ export const ViewListItem: FC<Props> = ({ view, icon }) => {
                 icon: 'ExitIcon',
                 tooltip: 'Destroy View',
                 action: async () => {
-                    const v = await fin.View.wrap({ uuid: view.uuid || '', name: view.name || '' });
+                    const handle = await fin.View.wrap({ uuid: view.uuid || '', name: view.name || '' });
                     try {
-                        v.destroy();
+                        handle.destroy();
                     } catch (e) {
                         console.error(`Could not destroy view ${view.uuid}:${view.name} (${e})`);
                     }
