@@ -25,7 +25,6 @@ export enum SortField {
 
 export enum Modals {
     Launch = 'launch',
-    ManifestViewer = 'manifest-viewer',
 }
 export interface SortMode {
     field: SortField;
