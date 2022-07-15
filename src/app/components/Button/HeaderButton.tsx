@@ -13,7 +13,6 @@ const Container = styled(Box)`
     background-size: 12px;
     border: 0;
     margin: 0;
-    padding: 0;
 
     min-width: ${({ theme }) => theme.px.xxlarge};
     height: ${({ theme }) => theme.px.xxlarge};
