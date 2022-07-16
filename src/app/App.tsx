@@ -70,7 +70,7 @@ const Container = styled(Box)`
 const Separator = styled(Box)`
     border-right: 1px ${({ theme }) => theme.palette.background4} solid;
     height: ${({ theme }) => theme.px.xxlarge};
-    margin: ${({ theme }) => `0 ${theme.px.xsmall} 0 ${theme.px.large}`};
+    margin: ${({ theme }) => `0 ${theme.px.small} 0 ${theme.px.large}`};
 `;
 const VersionLabel = styled(Label)`
     -webkit-app-region: drag;
