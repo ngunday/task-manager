@@ -42,19 +42,6 @@ const Container = styled(Box)`
     }
 `;
 const Body = styled(Box)`
-    &:before {
-        content: '';
-        background-image: url('openfin-icon.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        position: absolute;
-        pointer-events: none;
-        top: 0px;
-        right: 0px;
-        bottom: 0px;
-        left: 0px;
-        opacity: 0.05;
-    }
     background-color: ${({ theme }) => theme.palette.background1};
     border-radius: ${({ theme }) => theme.radius.base};
     box-shadow: ${({ theme }) => `rgb(0 0 0 / 25%) 0px ${theme.px.xsmall} ${theme.px.xsmall}`};
