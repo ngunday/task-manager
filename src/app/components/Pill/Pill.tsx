@@ -9,7 +9,7 @@ export const Pill: FC<Props> = ({ icon, text, tooltip, ...rest }) => {
     return (
         <Container title={tooltip} {...rest}>
             <Icon icon={icon} size={'small'} />
-            <PillText>{text}</PillText>
+            {text && <PillText>{text}</PillText>}
         </Container>
     );
 };
@@ -23,7 +23,7 @@ const Container = styled(Box)`
     font-size: ${({ theme }) => theme.fontSize.small};
     border-radius: ${({ theme }) => theme.px.base};
     text-transform: capitalize;
-    height: ${({ theme }) => theme.px.xxlarge};
+    height: ${({ theme }) => theme.px.xlarge};
     display: flex;
     align-items: center;
     justify-content: flex-start;

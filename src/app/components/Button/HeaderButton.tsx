@@ -1,12 +1,11 @@
-import { Box, BoxProps } from '@openfin/ui-library';
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-export const HeaderButton: FC<BoxProps> = ({ children, ...rest }) => {
+export const HeaderButton: FC<HTMLAttributes<HTMLButtonElement>> = ({ children, ...rest }) => {
     return <Container {...rest}>{children}</Container>;
 };
 
-const Container = styled(Box)`
+const Container = styled.button`
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;

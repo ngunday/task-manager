@@ -10,7 +10,6 @@ import { Modal } from './components/Modal/Modal';
 import { selectModal } from './store/slices/modal';
 import { useSelector } from 'react-redux';
 import { GlobalStyle } from './utils/globalStyle';
-import { HeaderButton } from './components/Button/HeaderButton';
 
 export const App: FC = () => {
     const [version, setVersion] = useState('0.0.0.0');
@@ -32,9 +31,7 @@ export const App: FC = () => {
                         <Icon icon={'CubeIcon'} />
                     </VersionLabel>
                     <Separator />
-                    <HeaderButton>
-                        <ActionMenu />
-                    </HeaderButton>
+                    <ActionMenu />
                 </Header>
                 <Body>
                     <Content>

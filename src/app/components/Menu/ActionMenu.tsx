@@ -5,7 +5,7 @@ import { useDropdown } from '../../hooks/useDropdown';
 import { Modals } from '../../model/UI';
 import { selectApplications } from '../../store/slices/applications';
 import { showModal } from '../../store/slices/modal';
-import { getUSDate } from '../../utils/getUSDate';
+import { getDateString } from '../../utils/getDateString';
 import { launchReader } from '../../utils/launchReader';
 import { HeaderButton } from '../Button/HeaderButton';
 
@@ -22,7 +22,7 @@ interface MenuAction {
 }
 
 export const ActionMenu: FC = () => {
-    const { isDropdownShowing, onShowDropdown } = useDropdown();
+    const { onShowDropdown } = useDropdown();
     const dispatch = useDispatch();
     const applications = useSelector(selectApplications);
 
@@ -70,10 +70,10 @@ export const ActionMenu: FC = () => {
                 try {
                     const log = menuResult.payload as OpenFin.LogInfo;
                     fin.System.getLog({ name: log.name }).then((logString) => {
-                        launchReader(`${log.name} [${getUSDate(new Date(log.date))}]`, logString, 'ReaderIcon');
+                        launchReader(`${log.name} [${getDateString(new Date(log.date))}]`, logString, 'ReaderIcon');
                     });
                 } catch (e) {
-                    console.error(`Could not load the log file log.name (${e})`);
+                    console.error(`Could not load the log file (${e})`);
                 }
                 break;
         }
@@ -87,7 +87,7 @@ export const ActionMenu: FC = () => {
                 {
                     label: 'Show Logs',
                     submenu: logList.map((log) => ({
-                        label: `[${getUSDate(new Date(log.date))}] ${log.name}`,
+                        label: `[${getDateString(new Date(log.date))}] ${log.name}`,
                         data: {
                             name: MenuActionNames.Log,
                             payload: log,
@@ -101,8 +101,7 @@ export const ActionMenu: FC = () => {
 
     return (
         <HeaderButton onClick={onShowDropdown(makeDropdownOptions, handleMenuResult)}>
-            <Icon icon={'HamburgerMenuIcon'} />
-            <Icon icon={isDropdownShowing ? 'TriangleUpIcon' : 'TriangleDownIcon'} size={'small'} />
+            <Icon icon={'DropdownMenuIcon'} />
         </HeaderButton>
     );
 };

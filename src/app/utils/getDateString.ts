@@ -1,4 +1,4 @@
-export const getUSDate = (date: Date) => {
+export const getDateString = (date: Date) => {
     const dateOpts: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const timeOpts: Intl.DateTimeFormatOptions = {
         hour12: false,
